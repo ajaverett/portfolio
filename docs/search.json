@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Aj",
+    "section": "",
+    "text": "Data Science Enthusiast"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data Respecter",
+    "section": "",
+    "text": "The p-value\n\n\n\n\n\n\n\nstatistics\n\n\nanime\n\n\n\n\n\n\n\n\n\n\n\nDec 31, 2022\n\n\nAj Averett\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nDec 27, 2022\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/pvalue/index.html",
+    "href": "posts/pvalue/index.html",
+    "title": "The p-value",
+    "section": "",
+    "text": "This is a post with executable code.\n\n1 + 1\n\n2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  }
+]
