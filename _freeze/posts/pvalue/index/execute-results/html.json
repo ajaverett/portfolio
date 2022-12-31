@@ -1,0 +1,11 @@
+{
+  "hash": "fd7b00268ae3b3ff240aa6329e62c6e2",
+  "result": {
+    "markdown": "---\ntitle: The p-value\nauthor: Aj Averett\ndate: '2022-12-31'\ncategories:\n  - statistics\n  - anime\nimage: curve.png\n---\n\nThis is a post with executable code.\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n2\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

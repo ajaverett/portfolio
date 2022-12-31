@@ -1,0 +1,18 @@
+---
+title: "About Aj"
+image: aj_pfp.jpg
+about:
+  template: jolla
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/ajaverett
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/ajaverett/
+    - icon: instagram
+      text: Instagram
+      href: https://www.instagram.com/rooftop_asian/
+---
+
+Data Science Enthusiast

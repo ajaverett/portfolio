@@ -1,0 +1,14 @@
+---
+title: "The p-value"
+author: "Aj Averett"
+date: "2022-12-31"
+categories: [statistics, anime]
+image: "curve.png"
+jupyter: python3
+---
+
+This is a post with executable code.
+
+```{python}
+1 + 1
+```
