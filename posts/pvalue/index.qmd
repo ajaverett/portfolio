@@ -7,6 +7,10 @@ image: "curve.png"
 jupyter: python3
 ---
 
+"While the p-value can be a useful statistical measure, it is commonly misused and misinterpreted." ([Wasserstein and Lazar, 2016](https://www.tandfonline.com/doi/full/10.1080/00031305.2016.1154108))
+
+*Note: The contents of this article are not peer-reviewed and may contain errors.*
+
 ![](levi.png){width="357"}
 
 Meet Levi. He is a short person. He is around 5'3" (63 inches). While we can tell he is short, we may wonder *how* short he is. In order to know this we need something to compare his height to.

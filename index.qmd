@@ -1,5 +1,5 @@
 ---
-title: "Data Respecter"
+title: "The Political Data"
 listing:
   contents: posts
   sort: "date desc"
