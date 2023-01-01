@@ -9,7 +9,7 @@
 <meta name="author" content="Aj Averett">
 <meta name="dcterms.date" content="2022-12-31">
 
-<title>Aj’s Blog - The p-value</title>
+<title>Aj’s Blog - The P-value</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,10 +100,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,7 +123,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -173,7 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">The p-value</h1>
+      <h1 class="title">The P-value</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">statistics</div>
                 <div class="quarto-category">anime</div>
@@ -212,15 +216,310 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>This is a post with executable code.</p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>2</code></pre>
+<p><img src="levi.png" class="img-fluid" width="357"></p>
+<p>Meet Levi. He is a short person. He is around 5’3” (63 inches). While we can tell he is short, we may wonder <em>how</em> short he is. In order to know this we need something to compare his height to.</p>
+<section id="american-sample" class="level1">
+<h1>American Sample</h1>
+<p>The code below allows us to create a hypothetical (but reasonable) data set of American male heights. I will be creating a sheet of 200 random American men. Below are a few entries…</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">###</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_random_people_dataframe(n):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a Pandas data frame with a single column for heights</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> pd.DataFrame({<span class="st">'height'</span>: np.random.normal(loc<span class="op">=</span><span class="dv">69</span>, scale<span class="op">=</span><span class="dv">3</span>, size<span class="op">=</span>n)})</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Round the heights to the nearest integer</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  df[<span class="st">'height'</span>] <span class="op">=</span> df[<span class="st">'height'</span>].<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add an 'id' column to the data frame</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  df[<span class="st">'id'</span>] <span class="op">=</span> df.index <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Send a request to the API and retrieve the names</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> requests.get(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://randommer.io/api/Name"</span>, </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    headers<span class="op">=</span>{</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">"X-Api-Key"</span>:api_key},</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>{</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="st">"nameType"</span>: <span class="st">"surname"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"quantity"</span>: n}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Parse the response from the API to extract the names</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  names <span class="op">=</span> response.json()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add names to the data frame</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df.assign(name<span class="op">=</span>names)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rearrange the columns</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df.reindex(columns<span class="op">=</span>[<span class="st">"id"</span>, <span class="st">"name"</span>, <span class="st">"height"</span>])</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return the data frame</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> df</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a data frame with random people's heights</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> create_random_people_dataframe(<span class="dv">200</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>df.drop(columns<span class="op">=</span>[<span class="st">'id'</span>]).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>height</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Krull</td>
+      <td>72.38</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cardoza</td>
+      <td>69.89</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Oyler</td>
+      <td>68.25</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>South</td>
+      <td>66.28</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Eads</td>
+      <td>65.55</td>
+    </tr>
+  </tbody>
+</table>
 </div>
 </div>
+</div>
+</section>
+<section id="quantifying-extremes" class="level1">
+<h1>Quantifying Extremes!</h1>
+<p>A standard score, also known as a z-score, is a way of comparing a single data point to a group of data points. It helps us understand how high or low a number is relative to the group. The z-score measures how many standard deviations away a point is from the group average. (For a review, see here)</p>
+<p>The average height and standard deviation for the generated American men is calculated below</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mean_height <span class="op">=</span> df[<span class="st">"height"</span>].mean().<span class="bu">round</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>st_dev_height <span class="op">=</span> df[<span class="st">"height"</span>].std().<span class="bu">round</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n_height <span class="op">=</span> df[<span class="st">"height"</span>].count()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Average height is: "</span><span class="op">+</span><span class="bu">str</span>(mean_height))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Standard deviation of height is: "</span><span class="op">+</span><span class="bu">str</span>(st_dev_height))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of people in sample is: "</span><span class="op">+</span><span class="bu">str</span>(n_height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Average height is: 70.0
+Standard deviation of height is: 3.0
+Number of people in sample is: 200</code></pre>
+</div>
+</div>
+<p>The formula for z-score is as so:</p>
+<p><span class="math display">\[
+z = \frac{x-\mu}{\sigma}
+\]</span></p>
+<p>As the z-score increases/decreases, the father away it gets from the mean. For example, Shaq is 85 inches tall. His z-score would be calculated as so:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>z_score_shaq <span class="op">=</span> (<span class="dv">85</span> <span class="op">-</span> mean_height)<span class="op">/</span>st_dev_height</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shaq's height is "</span><span class="op">+</span><span class="bu">str</span>(z_score_shaq.<span class="bu">round</span>(<span class="dv">2</span>))<span class="op">+</span><span class="st">" standard deviations from the mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shaq's height is 5.0 standard deviations from the mean</code></pre>
+</div>
+</div>
+<p>This also means that the smaller the z-score is, the closer it is to the mean. Take an average height person:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>z_score_avg <span class="op">=</span> (<span class="dv">69</span> <span class="op">-</span> mean_height)<span class="op">/</span>st_dev_height</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_score_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-0.3333333333333333</code></pre>
+</div>
+</div>
+</section>
+<section id="levis-height" class="level1">
+<h1>Levi’s Height</h1>
+<p>Levi is 5’3” (63 inches). That’s pretty short. Let’s see how short by calculating a z-score:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>z_score_levi <span class="op">=</span> (<span class="dv">63</span> <span class="op">-</span> mean_height)<span class="op">/</span>st_dev_height</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z_score_levi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-2.3333333333333335</code></pre>
+</div>
+</div>
+<p>This shows that Levi is a couple standard deviations lower than average. Pretty short!</p>
+</section>
+<section id="area-means-probability" class="level1">
+<h1>Area means probability</h1>
+<p>The graph below shows the normal distribution of American men with labeled heights for a standard deviation above and below average height (assuming average is 69 inches and standard deviation is 3 inches)</p>
+</section>
+<section id="section" class="level1">
+<h1><img src="images/image-1923584065.png" class="img-fluid" width="383"></h1>
+<p>If you met a random American, the odds that they are taller than average is 50 percent. (the odds that they are shorter than average is 50 percent) We can see that illustrated below. If the area under the whole curve is equal to 1, that means that half the area is equal to .5.</p>
+<p><img src="images/image-242182483.png" class="img-fluid" width="399"></p>
+<p>We can also imagine Levi compared to the American male population. The red line marks where Levi’s height is and the blue fill is for any person as short as Levi or shorter. This means that the probability of meeting someone as short or shorter than Levi in the American population is 2.28 percent.</p>
+<p><img src="images/image-1485315118.png" class="img-fluid" width="364"></p>
+<p>Shaq is unbelievably tall. Like you will probably not meet anyone as tall (or taller) than him. On the graph below, the red line on the right represents the height of Shaq. The filled in the blue area is so small, you cannot even see it. The number on top tells us that the odds of finding an American man as tall (or taller) than Shaq is 0.000004862 percent. (very unlikely!)</p>
+<p><img src="images/image-2094771569.png" class="img-fluid" width="414"></p>
+</section>
+<section id="a-whole-bunch-of-guys" class="level1">
+<h1>A whole bunch of guys</h1>
+<p>What we did above is calculate a z-score for a single piece of data given a normal distribution. The formula is seen below. The curve represents the possible heights that the individual could be.</p>
+<p><span class="math display">\[
+z = \frac{x-\mu}{\sigma}
+\]</span></p>
+<p>What if instead of using a single data point, we use a group of data points to compare? The reason for doing a single data point would to see how uncommon a data point would be given a distribution- this means that the reason for doing a group of points would be to see how uncommon a group would be given a distribution.</p>
+<p>Assume we have a group of people from Attack on Titan.</p>
+<ul>
+<li><p><span class="math inline">\(\bar{x}\)</span> would represent the average of the Attack on Titan group.</p></li>
+<li><p><span class="math inline">\(\mu\)</span> would represent the mean of American men</p></li>
+<li><p><span class="math inline">\(\sigma\)</span> would represent the standard deviation of American men</p></li>
+<li><p><span class="math inline">\(n\)</span> would represent the number of people in the Attack on Titan group</p></li>
+</ul>
+<p><span class="math display">\[
+z = \frac{\bar{x}-\mu}{\left(\frac{\sigma}{\sqrt{n}}\right)}
+\]</span></p>
+<p>A cool mathematical trick has just been done. Looking at one person compared to a population can tell us the probability that he came from the population. More interestingly, looking at a group compared to the population can tell us the probability that the group came from the population.</p>
+<p>For the comparison with the individual, we need</p>
+<ol type="1">
+<li>Find the height of the individual.</li>
+<li>Find the distribution of heights from the population (the curve represents potential/possible heights that the person could be)</li>
+<li>Use the height to produce a z-score for the individual. (calculated with the formula above)</li>
+<li>Wherever the z-score is, find the area of the tail of the distribution. The area shaded under the curve would represent the probability of finding someone that tall/short or taller/shorter.</li>
+</ol>
+<p>Similarly, For the comparison with the group, we need</p>
+<ol type="1">
+<li>Find the height average of the group.</li>
+<li>Find the distribution of heights from the population (the curve represents potential/possible height averages that the person could be)</li>
+<li>Use the height to produce a z-score (test-statistic) for the group. (calculated with the formula above)</li>
+<li>Wherever the z-score is, find the area of the tail of the distribution. The area shaded under the curve would represent the probability of finding a group that tall/short or taller/shorter.</li>
+</ol>
+<p>Below, we find the test statistic (z-score) of the Attack on Titan group.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_aot <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>      {<span class="st">'name'</span>: [<span class="st">'Eren'</span>, <span class="st">'Armin'</span>, <span class="st">'Levi'</span>,<span class="st">'Connie'</span>,<span class="st">'Marco'</span>],</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'height'</span>: [<span class="dv">67</span>, <span class="dv">64</span>, <span class="dv">65</span>, <span class="dv">62</span>, <span class="dv">70</span>]}</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>zscore_aot <span class="op">=</span> (df_aot[<span class="st">"height"</span>].mean() <span class="op">-</span> mean_height)<span class="op">/</span>(st_dev_height<span class="op">/</span>np.sqrt(df_aot[<span class="st">"height"</span>].count()))</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The average height for the Attack on Titan group is "</span><span class="op">+</span><span class="bu">str</span>(df_aot[<span class="st">"height"</span>].mean()))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The test-statistic/z-score for the Attack on Titan group is "</span><span class="op">+</span><span class="bu">str</span>(zscore_aot.<span class="bu">round</span>(<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The average height for the Attack on Titan group is 65.6
+The test-statistic/z-score for the Attack on Titan group is -3.28</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Code to find area under curve on left-side</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pval <span class="op">=</span> (scipy.stats.norm.sf(<span class="bu">abs</span>(<span class="op">-</span><span class="fl">2.53</span>)))<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The probability of finding American men as short (or shorter) than S1 Attack on Titan characters (assuming American men are truly 69 inches tall with a standard deviation of 3 inches) would be "</span> <span class="op">+</span> <span class="bu">str</span>(pval.<span class="bu">round</span>(<span class="dv">2</span>)) <span class="op">+</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The probability of finding American men as short (or shorter) than S1 Attack on Titan characters (assuming American men are truly 69 inches tall with a standard deviation of 3 inches) would be 0.57%</code></pre>
+</div>
+</div>
+<p><em>Note: We just generated a distribution from theoretical possible sample means. This is possible due to the Central Limit Theorem- see <a href="https://www.youtube.com/watch?v=YAlJCEDH2uY">here</a> and <a href="https://www.youtube.com/watch?v=Pujol1yC1_A">here</a> for some good explanations. Just for simple intuition, you are more likely to get a sample with a mean closer to the population mean than farther. (Also, notice how this assumes that the population standard deviation is known-it usually isn’t)</em></p>
+<p>On the graph below, if the population mean is truly 69 inches, then finding samples with the means 66 and 72 would be equally likely.</p>
+<p><img src="images/image-1694084215.png" class="img-fluid" width="331"></p>
+</section>
+<section id="introducing-the-p-value" class="level1">
+<h1>Introducing the P-value</h1>
+<p>In null hypotheses significance testing, we set up two hypotheses, the null hypothesis, and the alternative hypothesis. The process to test a hypothesis is as so:</p>
+<ol type="1">
+<li>Assume the null hypothesis is true</li>
+<li>Calculate what we would expect to see if the null hypothesis is true (output is a distribution of potential test statistics/sample means etc.)</li>
+<li>Calculate what we actually observe (output is your sample’s test statistic)</li>
+<li>Using the distribution of potential test statistics, find the probability of getting your sample’s test statistic</li>
+<li>If you find that the probability of you getting a test statistic is low enough according to the generated distribution of test statistics from your null hypothesis, (usually below 5 percent) reject the null hypothesis- otherwise fail to reject it.</li>
+</ol>
+<p>That’s it. The p-value is the probability of getting a sample as extreme or more extreme than any other result assuming your null hypothesis. As shown above, the two things you need to calculate the p-value are</p>
+<ul>
+<li><p>the observed sample value (test statistic)</p></li>
+<li><p>the distribution of theoretical sample values (test statistics) that could occur</p></li>
+</ul>
+<p>Getting these two numbers depends on what type of test you are doing and what type of assumptions you are willing to make.</p>
+<p><strong>The cut-off</strong></p>
+<p>Now how improbably is improbable? For example, if a coin is fair and you throw it 100 times, we expect to roughly get as many heads as tails- but at what point are we going to say, “Hey this coin doesn’t seem fair?” If we get 40 heads and 60 tails, this is less likely than 50 heads and 50 tails, but we can reasonably see this happening just by chance. However, if we get 75 heads and 25 tails- this would be reallllly unlikely assuming the coin is fair.</p>
+<p>By tradition, researchers have used the arbitrary “5 percent” cutoff point to determine what is “significant” or not. If the sample’s test statistic is so extreme that we would only expect the given sample to be that (or more) extreme less than 5 percent of the time, we deem it significant. `</p>
+<section id="expected-datathe-distribution-and-observed-datathe-test-statistic" class="level3">
+<h3 class="anchored" data-anchor-id="expected-datathe-distribution-and-observed-datathe-test-statistic">Expected Data/The Distribution and Observed Data/The Test statistic</h3>
+<p>This article will not deeply go into the distributions that you may see how extreme your test statistic is, but understanding the general nature will be useful for grasping how the p-value works.</p>
+<p><strong>Z-distribution</strong></p>
+<p>The z-distribution, also called the normal distribution, assumes that you know the standard deviation of your population. When your sample increases, your sample’s standard deviation will approach the population standard deviation. If this is the case, sufficiently large samples may assume the population standard deviation is ‘known’.</p>
+<p><strong>t-distribution</strong></p>
+<p>Assuming the population standard deviation is not known, we may need to use the t-distribution.</p>
+<p>The z-distribution has a set spread because we know the spread of the population. If we are unsure of the spread of the population, me may have to accept the possibility that seemingly rare events may just be results of a large spread. Now as our sample increases, we can be more sure of how the spread looks, but otherwise, we just make the distribution of test statistics wider (and therefore less sensitive to extreme findings).</p>
+<p>What specifically determines the spread of the t-distribution is the degrees of freedom. (calculated using the sample) Since larger sample sizes approximate the spread of the data better than small ones, the distribution becomes narrower as a result of these large sample sizes.</p>
+<p><strong>F-distribution</strong></p>
+<p>Test statistics and distributions of test statistics come in all varieties. The F-statistic is usually used to measure if groups of variables have some relation.</p>
+<ul>
+<li><p>Analysis of Variance (ANOVA) uses an F-test to measure if group means are all equal. Assuming that they are all equal, a super abnormal F-statistic would mean that either they aren’t all equal or they are equal and your sample observations were just really unlikely</p></li>
+<li><p>Linear Regression may use an F-test to measure if the model or any of its variables is related to the outcome. Assuming no relationship with the model or any of its variables, a super abnormal F-statistic would mean that either the model actually explains some of the model outcome, or its doesn’t and the sample observations were just really unlikely.</p></li>
+</ul>
+<p>Similar to the t-distribution, the F-distribution will change given the degrees of freedom of the sample.</p>
+<p><strong>Chi-Squared (χ2) Distribution</strong></p>
+<p>This distribution is similar to F-tests since it measures relationships between groups, but it does so with counts/frequencies of categorical variables rather than values or any other measurements from quantitative variables.</p>
+<p>Like the previous distributions, the chi-squared distribution will change given the degrees of freedom of the sample</p>
+<p><strong>Parametric and Non-Parametric tests</strong></p>
+<p>You can calculate a p-value from anything. All you need is the distribution of what you would find theoretically given your null hypothesis, and what you have actually found. Most of the tests above are parametric tests (all but the chi squared) and therefore have various assumptions- though there are more relaxed tests that may be appropriate for various situations. Some of these are as following:</p>
+<ul>
+<li>Wilcoxon Signed Rank test (One sample/Paired Sample t-test but non-parametric)</li>
+<li>Wilcoxon Rank Sum/Mann-Whitney U test (Two Sample t-test but non-parametric)</li>
+<li>Kruskal-Wallis test (ANOVA but non-parametric)</li>
+</ul>
+<p>The ultimate non-parametric test is the <a href="https://en.wikipedia.org/wiki/Permutation_test">permutation test</a> which makes a custom distribution of theoretical test statistics. This is only to show that the only thing one needs for a p-value is a theoretical sampling distribution of test statistics (under the null hypothesis) and the observed test statistic.</p>
+</section>
+</section>
+<section id="what-the-p-value-is-not" class="level1">
+<h1>What the p-value is NOT</h1>
+<p><strong>The p-value is NOT the likelihood that a result is due to chance</strong></p>
+<p>“When <span class="math inline">\(p\)</span> is calculated, it is already assumed that <span class="math inline">\(H_0\)</span> is true, so the probability that sampling error is the only explanation is already taken to be [100 percent]. It is thus illogical to view <span class="math inline">\(p\)</span> as measuring the likelihood of sampling error. thus, <span class="math inline">\(p\)</span> does not apply to a particular result as the probability that sampling error was the sole causal agent. there is no such thing as a statistical technique that determines the probability that various causal factors, including sampling error, acted on a particular result. instead, inference about causation is a rational exercise that considers results within the context of design, measurement, and analysis. Besides, virtually all sample results are affected by error of some type, including measurement error.”</p>
+<p>(<a href="https://doi.org/10.1037/14136-000">Kline 2013</a>)</p>
+<p><strong>The p-value is NOT the likelihood that a result is due to chance under the null hypothesis.</strong></p>
+<p>“That this is not the case is seen immediately from the P value’s definition, the probability of the observed data, <strong><em>plus more extreme data</em></strong>, under the null hypothesis. The result with the P value of exactly .05 (or any other value) is the most probable of all the other possible results included in the”tail area” that defines the P value. The probability of any individual result is actually quite small, and Fisher said he threw in the rest of the tail area “as an approximation.”</p>
+<p>(<a href="https://doi.org/10.1002/9781118445112.stat06809">Goodman, 2014</a>)</p>
+<p><strong>The p-value is NOT the likelihood that a Type 1 error has occurred</strong></p>
+<p>“[T]he p-value represents the probability of making a Type I error <em>if the null hypothesis is perfectly true</em>…</p>
+<p>The p-value does not give you the probability that you have made a Type I error in reality. The phrase “if the null hypothesis were perfectly true” is the key to avoiding this misinterpretation. If H0 is not an absolutely perfect statistical model for reality (perhaps because of tiny differences between group means in the population, or just because the null is completely wrong), then the probability expressed in a p-value may not be accurate (<a href="doi.org/10.1177/0013164496056005002">Kirk, 1996</a>). It is still a useful statistic, however, especially because it can help us make rational decisions about how well the null hypothesis matches the data in a study (<a href="doi.org/10.1080/00031305.2016.1154108">Wasserstein &amp; Lazar, 2016</a>; <a href="https://psycnet.apa.org/record/1969-13530-001">Winch &amp; Campbell, 1969</a>).</p>
+<p>(<a href="https://www.google.com/books/edition/Statistics_for_the_Social_Sciences/Lw0FEAAAQBAJ?hl=en">Warne, 2017</a>)</p>
+<p><strong>The p-value is NOT the likelihood that</strong> <span class="math inline">\(H_0\)</span> <strong>is true</strong></p>
+<p>“The <span class="math inline">\(p\)</span> value does not say anything about the probability that the null hypothesis is true because the p-value is calculated under the scenario that the null hypothesis is perfectly true (<a href="https://psycnet.apa.org/record/2009-18372-004">Fidler, 2010</a>). As a result, <span class="math inline">\(p\)</span> cannot tell us whether the null hypothesis is true because we had to assume it was true in the first place to calculate <span class="math inline">\(p\)</span> (<a href="https://psycnet.apa.org/record/2002-14044-001">Haller &amp; Krauss, 2002</a>). Likewise, a p-value cannot tell us whether the alternative hypothesis is true because <span class="math inline">\(p\)</span> is based on the assumption that the null hypothesis is perfectly true.”</p>
+<p>(<a href="https://www.google.com/books/edition/Statistics_for_the_Social_Sciences/Lw0FEAAAQBAJ?hl=en">Warne, 2017</a>)</p>
+<p><span class="math inline">\(1 -\)</span> <strong>p-value is NOT the likelihood that the result will be replicated</strong></p>
+<p>“p says very little about the replicability or stability of results (<a href="doi.org/10.1037/1082-989x.1.2.115">Schmidt, 1996</a>). Indeed, p-values fluctuate wildly across studies (<a href="https://pubmed.ncbi.nlm.nih.gov/26158948/">Cumming, 2008</a>). It is true, though, that (generally speaking) low p-values indicate that the null hypothesis may possibly be easier to reject in the future (<a href="doi.org/10.1037/1082-989x.11.3.217">Cumming &amp; Maillardet, 2006</a>). However, this assumes that the replications are conducted under precisely the same conditions as the original study, with every possible relevant (and irrelevant) factor perfectly replicated. In real life, a low p-value does not necessarily mean that you will get similar results if you conducted the same study again. In fact, attempts to replicate studies with low p-values often do not succeed (<a href="doi.org/10.1126/science.aac4716">Open Science Collaboration, 2015</a>). If the sample size is small or if the sample is not representative of the population in some way (as occurs frequently with nonrandom samples), the results may be unstable and not replicable, even if p is very low and the null hypothesis is strongly rejected. The best way to determine whether the results of a study will replicate is to conduct a replication.”</p>
+<p>(<a href="https://www.google.com/books/edition/Statistics_for_the_Social_Sciences/Lw0FEAAAQBAJ?hl=en">Warne 2017</a>)</p>
+<p><strong>The p-value is NOT an indicator of how important the findings are</strong></p>
+<p>The p-value says nothing about the importance of findings (<a href="doi.org/10.1080/00220970109599489">Kieffer, Reese, &amp; Thompson, 2001</a>). Remember that importance is an issue of practical significance – not statistical significance. There is nothing magical about an α value less than .05. Decisions about policy, psychological interventions, and other practical implications of research should be based on more than just a p-value. Such important decisions should not be based on a statistic that is vulnerable to changes in sample size and study conditions (<a href="doi.org/10.1080/00031305.2016.1154108">Wasserstein &amp; Lazar, 2016</a>).</p>
+<p>(<a href="https://www.google.com/books/edition/Statistics_for_the_Social_Sciences/Lw0FEAAAQBAJ?hl=en">Warne, 2017</a>)</p>
+<p><strong>The p-value is NOT an indicator about the size of an effect</strong></p>
+<p>“p-values indicate the size of an effect (e.g., the difference between means or the magnitude of the relationship between variables). For example, a researcher finding that p is greater than α (indicating that the null hypothesis should be retained) may decide that the results are”insignificant” or irrelevant. This confuses p-values with effect sizes. Effect sizes quantify the strength of mean group differences or variable relationships; p-values do not (<a href="doi.org/10.1080/00031305.2016.1154108">Wasserstein &amp; Lazar, 2016</a>). If the sample size is small or the study has low statistical power, then there could be a large effect size that is worth discussing, even if p is too high to provide evidence to reject the null hypothesis… Understanding the strength of relationships or the magnitude of group differences is important – and that is why it is essential to calculate and report an effect size to accompany a null hypothesis statistical significance test (<a href="https://www.apa.org/pubs/books/4200066">American Psychological Association, 2010</a>; <a href="doi.org/10.1080/00031305.2016.1154108">Wasserstein &amp; Lazar, 2016</a>).”</p>
+<p>(<a href="https://www.google.com/books/edition/Statistics_for_the_Social_Sciences/Lw0FEAAAQBAJ?hl=en">Warne, 2017</a>)</p>
+<p><img src="images/image-510881184.png" class="img-fluid" width="418"></p>
+<p>See more <a href="https://www.ohri.ca//newsroom/seminars/SeminarUploads/1829/Suggested%20Reading%20-%20Nov%203,%202014.pdf">here</a> and <a href="https://www.apa.org/pubs/books/4316151">here</a></p>
+<p><strong>The misinterpretation of p-values and its consequences have been a disaster on academia</strong></p>
+<p><img src="images/image-553674422.png" class="img-fluid" width="419"></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
