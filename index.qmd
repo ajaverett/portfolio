@@ -1,5 +1,5 @@
 ---
-title: "The Political Data"
+title: "Rooftop Data"
 listing:
   contents: posts
   sort: "date desc"
