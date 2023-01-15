@@ -2,6 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/linear_regression/linear_regression.html",
+      "/posts/usa_christian/index.html",
+      "/posts/power_triangle/power_triangle.html",
       "/posts/pvalue/index.html",
       "/posts/welcome/index.html"
     ]
