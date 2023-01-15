@@ -2,8 +2,8 @@
 title: "State of American Christianity"
 author: "Aj Averett"
 date: "2023-1-14"
-categories: [statistics, anime]
-image: "curve.png"
+categories: [religion]
+image: "chreaster.png"
 format:
   html:
     code-fold: true
