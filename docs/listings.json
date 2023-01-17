@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/lin_reg/index.html",
       "/posts/usa_christian/index.html",
       "/posts/power_triangle/power_triangle.html",
       "/posts/pvalue/index.html",
