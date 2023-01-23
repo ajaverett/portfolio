@@ -1,0 +1,343 @@
+---
+title: "Linear Algebra Exam 1 Review"
+author: "Aj Averett"
+date: "2023-1-22"
+categories: [mathematics]
+image: 'linalg.png'
+---
+
+# Chapter 1
+
+## Notation for systems of linear equations
+
+**System of Equations**
+
+$$
+\begin{cases}
+a_{11}x_1 & + &a_{12}x_2 &+ \dots+ & a_{1n}x_n &= b_1 \\
+a_{21}x_1 & + &a_{22}x_2 &+ \dots+ & a_{2n}x_n &= b_2 \\
+\vdots && \vdots & \ddots & \vdots & \vdots \\
+a_{m1}x_1 & + &a_{m2}x_2 &+ \dots+ & a_{mn}x_n &= b_m
+\end{cases}
+$$
+
+**Augmented matrix:** $\begin{bmatrix}A|\vec{b}\end{bmatrix}$
+
+$$
+\left[\begin{array}{@{}cccc|c@{}}
+a_{11} & a_{12} & \dots & a_{1n} & b_1 \\
+a_{21} & a_{22} & \dots & a_{2n} & b_2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+a_{m1} & a_{m2} & \dots & a_{mn} & b_m
+\end{array}\right]
+$$
+
+**Vector Equation:** $x_1\vec{a_1}+x_2\vec{a_2}+...+x_n\vec{a_n}=\vec{b}$
+
+$$
+x_1
+\begin{bmatrix}
+a_{11}\\
+a_{21}\\
+\vdots\\
+a_{m1}
+\end{bmatrix} +
+x_2
+\begin{bmatrix}
+a_{12}\\
+a_{22}\\
+\vdots\\
+a_{m2}
+\end{bmatrix}+
+\dots +
+x_n
+\begin{bmatrix}
+a_{1n}\\
+a_{2n}\\
+\vdots\\
+a_{mn}
+\end{bmatrix} = 
+\begin{bmatrix}
+b_1\\
+b_2\\
+\vdots\\
+b_m
+\end{bmatrix}
+$$
+
+**Matrix Equation:** $A\vec{x}=\vec{b}$
+
+$$
+\begin{bmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \dots & a_{mn}
+\end{bmatrix} 
+\begin{bmatrix}
+x_1 \\ 
+x_2 \\ 
+\vdots \\ 
+x_n
+\end{bmatrix}=
+\begin{bmatrix}
+b_1 \\ b_2 \\ \vdots \\ b_m
+\end{bmatrix}
+$$
+
+## Chapter 1.1 Review
+
+**A system of linear equations has either:**
+
+1.  no solution (inconsistent)
+2.  exactly one solution (consistent not-unique)
+3.  infinitely many solutions. (consistent unique)
+
+These are two fundamental questions (consistency, uniqueness)
+
+**If two linear systems are equivalent:**
+
+-   the augmented matrices of these two linear systems are row equivalent
+
+-   they both have the same solution set
+
+**For row reduction:**
+
+-   Every elementary row operation is reversible.
+
+-   Elementary row operations on an augmented matrix never change the solution set of the associated linear system. **TRUE(**solution set never changes**)**
+
+**Miscellaneous:**
+
+-   The solution set of a linear system involving variables $x_1,...,x_n$ is a list of numbers $(s_1,...,s_n)$ that makes each equation in the system a true statement when the values $s_1,...,s_n$ are substituted for $x_1,...,x_n$ respectively. **FALSE** (this may just be a single solution, not the solution set)
+
+## Chapter 1.2 Review
+
+**For augmented matrices:**
+
+-   *Definition- Nonzero row* or column in a matrix means a row or column that contains at least one non-zero leading entry
+
+-   *Definition- Leading entry* of a row refers to the leftmost nonzero entry (in a nonzero row).
+
+**Definition- Row echelon form (REF):**
+
+1.  All nonzero rows are above any rows of all zeros.
+2.  Each leading entry of a row is in a column to the right of the leading entry of the row above it.
+3.  All entries in a column below a leading entry are zeros.
+
+REF- not unique, RREF- unique
+
+**Definition- Reduced row echelon form (RREF):**
+
+1.  Meets requirements for row echelon form
+2.  The leading entry in each nonzero row is 1.
+3.  Each leading 1 is the only nonzero entry in its column.
+
+The pivot positions in a matrix do NOT depend on whether row interchanges are used in the row reduction process because pivot positions are derived from RREF which are unique
+
+**Theorem 1- Uniqueness of the Reduced Echelon Form:**
+
+-   Each matrix is row equivalent to one and only one reduced echelon matrix
+
+**For pivots:**
+
+-   *Definition- Pivot position* in a matrix A is a location in A that corresponds to a leading 1 in the reduced echelon form of A.
+
+-   *Definition- Pivot column* is a column of A that contains a pivot position.
+
+**For variables:**
+
+-   *Definition- basic variables* are the variables corresponding to pivot columns in a RREF matrix. (A basic variable in a linear system is a variable that corresponds to a pivot column in the coefficient matrix.)
+
+-   *Definition- free variables* are the other variables not corresponding to a pivot column (zeroed out)
+
+Whenever a system has free variables, the solution set contains many solutions **FALSE(**since \[\[00\|1\],\[00\|0\]\] has a free variable but is inconsistent**)**
+
+**Theorem 2- Existence and Uniqueness Theorem:**
+
+A linear system is consistent if and only if the rightmost column of the augmented matrix is *not* a pivot column---that is, if and only if an echelon form of the augmented matrix has *no* row of the form
+
+\[ 0 ... 0 \| b \] with b nonzero
+
+If a linear system is consistent, then the solution set contains either
+
+-   a unique solution, when there are no free variables, or
+
+-   infinitely many solutions, when there is at least one free variable.
+
+If one row in an echelon form of an augmented matrix is \[ ... a_i ... \| 0 \] , then the associated linear system is inconsistent. **FALSE**
+
+Suppose a m x n coefficient matrix for a system has m pivot columns. This is consistent by theorem 2.
+
+Suppose a system of linear equations has a m x n augmented matrix whose nth column is a pivot column. This is inconsistent by theorem 2
+
+**For row reduction:**
+
+-   Row equivalent matrices will always row reduce to one matrix in RREF form
+
+-   The row reduction algorithm applies to all nonzero matrices
+
+-   Reducing a matrix to echelon form is called the forward phase of the row reduction process.
+
+**Miscellaneous:**
+
+-   Finding a parametric description of the solution set of a linear system is the same as solving the system. A general solution of a system is an explicit description of all solutions of the system.
+
+## Chapter 1.3 Review
+
+**Definition- Vector**
+
+-   A matrix with only one column is called a column vector, or simply a vector
+
+-   The length n of a vector indicates indicates that is in the set: $\mathbb{R}^n$
+
+-   $\begin{bmatrix}u_1\\u_2\\\vdots\\u_n\end{bmatrix}\in\mathbb{R}^n$
+
+-   $\begin{bmatrix}a\\b\end{bmatrix} \neq \begin{bmatrix}a &b\end{bmatrix}$
+
+-   Any list of n real numbers is a vector in $\mathbb{R}^n$
+
+**For linear combinations and span:**
+
+-   *Definition- Linear combination*: Given vectors $v_1, v_2, ..., v_p$ in $\mathbb{R}^n$ and given scalars $c_1, c_2, ..., c_p$, the vector y defined by $y = c_1v_1 + ... + c_pv_p$ in which y is a linear combination of $v_1, v_2, ..., v_p$ with weights: $c_1, c_2, ..., c_p$,
+
+-   If $\vec{v_1},...,\vec{v_p}$ are in $\mathbb{R^n}$, then the set of all linear combinations of $\vec{v_1},...,\vec{v_p}$ is denoted by Span $\{\vec{v_1},...,\vec{v_p}\}$ and is called the **subset of of** $\mathbb{R}^n$ **spanned (or generated)** **by** $\vec{v_1},...,\vec{v_p}$. That is, Span$\{\vec{v_1},...,\vec{v_p}\}$ is the collection of all vectors that can be written in the form $c_1\vec{v_1}+c_2\vec{v_2}+…+c_p\vec{v_p}$ with $c_1,…,c_p$ scalars.
+
+-   The set Span $\{\vec{u}, \vec{v}\}$ is visualized as a plane in $\mathbb{R}^2$ if the vectors in that set are linearly independent
+
+-   Asking whether the linear system corresponding to an augmented matrix $[\vec{a_1}\vec{a_2}|\text{ }\vec{b}]$ has a solution amounts to asking whether $\vec{b}$ is in Span $\{\vec{a_1},\vec{a_2},\vec{a_3}\}$
+
+**Vector equations:**
+
+-   For $x_1\vec{a_1}+x_2\vec{a_2}+...+x_n\vec{a_n}=\vec{b}$ , this means that $b$ can be generated by a linear combination of $\vec{a_1},...,\vec{a_n}$ if and only if there exists a solution to the linear system corresponding to the matrix
+
+## Chapter 1.4 Review
+
+**Theorem 3: The equations below have the same solution sets**
+
+-   \[$\vec{a_1},…,\vec{a_n}|\vec{b}$\] (*Augmented matrix*)
+
+-   $x_1\vec{a_1}+x_2\vec{a_2}+...+x_n\vec{a_n}=\vec{b}$, (*Vector Equation*)
+
+-   $[\vec{a_1},…,\vec{a_n}]\vec{x}=\vec{b}$ or $A\vec{x}=\vec{b}$ (*Matrix Equation*)
+
+**For the existence of solutions and consistency**
+
+-   The equation $A\vec{x}=\vec{b}$ has a solution if and only if $b$ is a linear combination of the columns of $A$.
+-   The equation $A\vec{x}=\vec{b}$ is consistent if the augmented matrix \[$A\text{ }|\text{ }\vec{b}$\] has a pivot position in every row. **FALSE**
+-   If the columns of an m x n matrix $A$ span $\mathbb{R}^m$, then the equation $A\vec{x}=\vec{b}$ is consistent for each $b$ in $\mathbb{R}^m$.
+-   If the equation $A\vec{x}=\vec{b}$ is inconsistent, then $b$ is not in the set spanned by the columns of $A$.
+
+**Theorem 4: The statements below are either all true or all false for A, an m x n coefficient matrix**
+
+-   For each $b$ in $\mathbb{R}^m$, the equation $A\vec{x}=\vec{b}$ has a solution.
+
+-   Each $b$ in $\mathbb{R}^m$ is a linear combination of the columns of $A$.
+
+-   The columns of A span $\mathbb{R}^m$.
+
+-   $A$ has a pivot position in every row
+
+**Row-Vector Rule for Computing** $A\vec{x}$
+
+-   If the product $A\vec{x}$ is defined, then the ith entry in $A\vec{x}$ is the sum of the products of corresponding entries from row $i$ of $A$ and from the vector $\vec{x}$
+
+**Theorem 5: If** $A$ **is an m x n matrix,** $\vec{u}$ **and** $\vec{v}$ **are vectors in** $\mathbb{R}^n$ **, and** $c$ **is a scalar, then:**
+
+-   $A(\vec{u}+\vec{v}) = A\vec{u}+A\vec{v}$
+
+-   $A(c\vec{u})=c(A\vec{u})$
+
+**For linear combinations:**
+
+-   A vector $b$ is a linear combination of the columns of a matrix $A$ if and only if the equation $A\vec{x}=\vec{b}$ has at least one solution.
+
+**Miscellaneous:**
+
+-   The first entry in the product $A\vec{x}$ is a sum of products
+-   If $A$ is an m x n matrix and if the equation $A\vec{x}=\vec{b}$ is inconsistent for some $b$ in $\mathbb{R}^m$, then $A$ cannot have a pivot position in every row.
+
+**???**
+
+-   If $A$ is an m x n matrix whose columns do not span $\mathbb{R}^m$, then the equation $A\vec{x}=\vec{b}$ is inconsistent for some $b$ in $\mathbb{R}^m$. **???**
+
+## Chapter 1.5 Review
+
+**Definition- Homogeneous:**
+
+-   A system of linear equations is said to be homogeneous if it can be written in the form $A\vec{x}=\vec{0}$, where A is an m x n matrix and 0 is the zero vector in $\mathbb{R}^m$
+
+-   The equation $A\vec{x}=\vec{b}$ is homogeneous if the zero vector is a solution
+
+-   The homogeneous equation $A\vec{x}=\vec{0}$ has a nontrivial solution if and only if the equation has at least one free variable. A homogeneous equation is always consistent, however, because there is always the trivial solution.
+
+-   The homogeneous equation $A\vec{x}=\vec{0}$ has the nontrivial solution if and only if the equation has at least one free variable.
+
+-   The equation $A\vec{x} = \vec{0}$ gives an implicit (not explicit) description of its solution set.
+
+**Definition- Parametric vector form**
+
+-   Parametric Vector Form is the explicit description of the plane as the set spanned by u and v. Sometimes such an equation is written as $x = s\vec{u} +t\vec{v} (s, t \in \mathbb{R})$. Whenever a solution set is described explicitly with vectors, we say that the solution is in parametric vector form.
+
+The equation $\vec{x} = \vec{p} + t\vec{v}$, $t \in \mathbb{R}$ describes the solution set of $A\vec{x} = \vec{b}$ in parametric vector form. Thus the solutions of $A\vec{x} = \vec{b}$ are obtained by adding the vector $\vec{p}$ to the solutions of $A\vec{x} = \vec{0}$. The vector $\vec{p}$ is just one particular solution of $A\vec{x} = \vec{b}$. Geometrically, given $\vec{v}$ and $\vec{p}$, the effect of adding $\vec{p}$ to $\vec{v}$ is to move $\vec{v}$ in a direction parallel to the line through $\vec{p}$ and $\vec{0}$. Thus $\vec{x} = \vec{p} + t\vec{v}$ is the equation of the line **through** $\vec{p}$ **parallel** to $\vec{v}$.
+
+The effect of adding $\vec{p}$ to a vector is to move the vector in a direction parallel to $\vec{p}$
+
+The relation between the solution sets of $A\vec{x} = \vec{b}$ and $\vec{A}\vec{x} = \vec{0}$ generalizes to any consistent equation $\vec{A}\vec{x} = \vec{b}$, although the solution set will be larger than a line when there are several free variables.
+
+**Theorem 6:**
+
+-   Suppose the equation $A\vec{x} = \vec{b}$ is consistent for some given $\vec{b}$, and let $\vec{p}$ be a solution. Then the solution set of $A\vec{x} = \vec{b}$ is the set of all vectors of the form $\vec{w} = \vec{p} + \vec{v_h}$, where $\vec{v_h}$ is any solution of the homogeneous equation $A\vec{x} = \vec{0}$. Theorem 6 says that if $A\vec{x} = \vec{b}$ has a solution, then the solution set is obtained by translating the solution set of $A\vec{x} = \vec{0}$, using any particular solution $\vec{p}$ of $A\vec{x} = \vec{b}$ for the translation.
+-   Theorem 6 apply only to an equation $A\vec{x}=\vec{b}$ that has at least one nonzero solution $\vec{b}$ . When $A\vec{x}=\vec{b}$ has no solution, the solution set is empty
+
+**Miscellaneous:**
+
+-   The solution set of $A\vec{x} = \vec{b}$ is the set of all vectors of the form $\vec{w} = \vec{p} + \vec{v}_h$*, where* $\vec{v}_h$ is any solution of the equation $A\vec{x} = \vec{0}$. This is only true when there exists some vector $\vec{p}$ such that $A\vec{p}=\vec{b}$.
+
+**???**
+
+-   The equation $\vec{x} = x_2\vec{u} + x_3\vec{v}$, with $x_2$ and $x_3$ free (and neither $\vec{u}$ nor $\vec{v}$ a multiple of the other), describes a plane through the origin. **???**
+
+## Chapter 1.7 Review
+
+**Definition- Linear independence**
+
+-   An indexed set of vectors ${\vec{v_1}, \vec{v_2}, . . . , \vec{v_p}}$ in $\mathbb{R}^n$ is said to be linearly independent if the vector equation: $x_1\vec{v_1} + x_2\vec{v_2} + \dots + x_p\vec{v_p} = \vec{0}$ has only the trivial solution. The set ${\vec{v_1}, \vec{v_2}, . . . , \vec{v_p}}$ is said to be linearly dependent if there exist weights $c_1, . . . , c_p$, not all zero, such that: $c_1\vec{v_1} + c_2\vec{v_2} + \dots + c_p\vec{v_p} = \vec{0}$
+
+-   $c_1\vec{v_1} + c_2\vec{v_2} + \dots + c_p\vec{v_p} = \vec{0}$ is called a linear dependence relation among $\vec{v_1}, \vec{v_2}, . . . , \vec{v_p}$ when the weights are not all zero. An indexed set is linearly dependent if and only if it is not linearly independent.
+
+-   We may write the matrix equation $A\vec{x} = \vec{0}$ as: $x_1\vec{a_1} + x_2\vec{a_2} + \dots + x_p\vec{a_p} = \vec{0}$ Each linear dependence relation among the columns of ${A}$ corresponds to a nontrivial solution of $A\vec{x} = \vec{0}$. The columns of matrix ${A}$ are linearly independent if and only if the equation $A\vec{x} = \vec{0}$ has only the trivial solution.
+
+-   A set containing only one vector, say $\vec{v}$, is linearly independent if and only if $\vec{v}\neq\vec{0}$. This is because the vector equation $x_1\vec{v}=\vec{0}$ has only the trivial solution when $\vec{v}\neq\vec{0}$. The zero vector is linearly dependent because $x_1\vec{0}=\vec{0}$ has many nontrivial solutions.
+
+**Theorem 7- Characterization of Linearly Dependent Sets:**
+
+-   An indexed set $S = \{\vec{v_1}, . . . , \vec{v_p}\}$ of two or more vectors is linearly dependent if and only if at least one of the vectors in $S$ is a linear combination of the others. In fact, if $S$ is linearly dependent and $\vec{v_1} \neq \vec{0}$, then some $\vec{v_j}$ , with $j > 1$, is a linear combination of the preceding vectors $\vec{v_1}, . . . , \vec{v_{j-1}}$.
+
+Note that Theorem 7 does not say that every vector in a linearly dependent set is a linear combination of the preceding vectors. A vector in a linearly dependent set may fail to be a linear combination of the other vectors.
+
+**Theorem 8: If a set contains more vectors than there are entries in each vector**
+
+-   then the set is linearly dependent. That is, any set ${\vec{v_1}, . . . , \vec{v_p}}$ in $\mathbb{R}^n$ is linearly dependent if $p > n$.
+
+Proof. Let $\mathbf{A} = [\vec{v_1} \ \dots \ \vec{v_p}]$. Then $\mathbf{A}$ is $n \times p$ and the equation $\mathbf{A}\mathbf{x} = \mathbf{0}$ corresponds to a system of $n$ equations in $p$ unknowns. If $p > n$, there are more variables than equations, so there must be a free variable. Hence $\mathbf{A}\mathbf{x} = \mathbf{0}$ has a nontrivial solution and the columns of $\mathbf{A}$ are linearly dependent. Note that Theorem 8 says nothing about the case in which the number of vectors in the set does not exceed the number of entries in each vector.
+
+**Theorem 9: If a set** $S = {\vec{v_1}, . . . , \vec{v_p}}$ **in** $\mathbb{R}^n$ **contains the zero vector**
+
+-   then the set is linearly dependent.
+
+Proof. By renumbering the vectors, we may suppose $\vec{v_1} = \vec{0}$. Then the equation $1\vec{v_1} + 0\vec{v_2} + \dots + 0\vec{v_p} = \vec{0}$ shows that $S$ is linearly dependent.
+
+**For linear independence:**
+
+-   If $\vec{v_1}, \dots, \vec{v_4}$ are in $\mathbb{R}^4$ and $\vec{v_3} = 2\vec{v_1} + \vec{v_2}$, then ${\vec{v_1}, \vec{v_2}, \vec{v_3}, \vec{v_4}}$ is linearly dependent.
+
+-   If $\vec{v_1}, \dots, \vec{v_4}$ are in $\mathbb{R}^4$ and $\vec{v_3} = \vec{0}$, then ${\vec{v_1}, \vec{v_2}, \vec{v_3}, \vec{v_4}}$ is linearly dependent.
+
+-   If $\vec{v_1}$ and $\vec{v_2}$ are in $\mathbb{R}^4$ and $\vec{v_2}$ is not a scalar multiple of $\vec{v_1}$, then ${\vec{v_1}, \vec{v_2}}$ is linearly independent. **FALSE(**$\vec{v_1}$ could be the zero vector**)**
+
+-   If $\vec{v_1}, \dots, \vec{v_4}$ are in $\mathbb{R}^4$ and $\vec{v_3}$ is not a linear combination of $\vec{v_1}, \vec{v_2}, \vec{v_4}$, then ${\vec{v_1}, \vec{v_2}, \vec{v_3}, \vec{v_4}}$ is linearly independent. **FALSE(**since $\vec{v_1}=[1,1,1,1]; \vec{v_2}=[2,2,2,2]; \vec{v_3}=[1,2,3,4]; \vec{v_4}=[3,3,3,3]$**)**
+
+-   If $\vec{v_1}, \dots, \vec{v_4}$ are in $\mathbb{R}^4$ and ${\vec{v_1}, \vec{v_2}, \vec{v_3}}$ is linearly dependent, then $\{\vec{v_1}, \dots, \vec{v_4}\}$ is also linearly independent **TRUE**
+
+-   If $\vec{v_1}, \dots, \vec{v_4}$ are linearly independent vectors in $\mathbb{R}^4$, then $\{{\vec{v_1}, \vec{v_2}, \vec{v_3}}\}$ is also linearly independent. \[Hint: Think about $x_1\vec{v_1} + x_2\vec{v_2} + x_3\vec{v_3} + 0\vec{v_4} = \vec{0}$.\] **TRUE**
