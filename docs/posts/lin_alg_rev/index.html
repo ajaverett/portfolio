@@ -434,6 +434,34 @@ b_1 \\ b_2 \\ \vdots \\ b_m
 <li><p>If <span class="math inline">\(\vec{v_1}, \dots, \vec{v_4}\)</span> are in <span class="math inline">\(\mathbb{R}^4\)</span> and <span class="math inline">\({\vec{v_1}, \vec{v_2}, \vec{v_3}}\)</span> is linearly dependent, then <span class="math inline">\(\{\vec{v_1}, \dots, \vec{v_4}\}\)</span> is also linearly independent <strong>TRUE</strong></p></li>
 <li><p>If <span class="math inline">\(\vec{v_1}, \dots, \vec{v_4}\)</span> are linearly independent vectors in <span class="math inline">\(\mathbb{R}^4\)</span>, then <span class="math inline">\(\{{\vec{v_1}, \vec{v_2}, \vec{v_3}}\}\)</span> is also linearly independent. [Hint: Think about <span class="math inline">\(x_1\vec{v_1} + x_2\vec{v_2} + x_3\vec{v_3} + 0\vec{v_4} = \vec{0}\)</span>.] <strong>TRUE</strong></p></li>
 </ul>
+</section>
+<section id="chapter-1.8-review" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-1.8-review">Chapter 1.8 Review</h2>
+<p><strong>Definition- Transformation:</strong></p>
+<ul>
+<li>A transformation (or function or mapping) <span class="math inline">\(T\)</span> from <span class="math inline">\(\mathbb{R}^n\)</span> to <span class="math inline">\(\mathbb{R}^m\)</span> is a rule that assigns to each vector <span class="math inline">\(\vec{x}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span> a vector <span class="math inline">\(T(\vec{x})\)</span> in <span class="math inline">\(\mathbb{R}^m\)</span>. The set <span class="math inline">\(\mathbb{R}^n\)</span> is called the domain of <span class="math inline">\(T\)</span>, and <span class="math inline">\(\mathbb{R}^m\)</span> is called the codomain of <span class="math inline">\(T\)</span>. The notation <span class="math inline">\(T: \mathbb{R}^n \rightarrow \mathbb{R}^m\)</span> indicates that the domain of <span class="math inline">\(T\)</span> is <span class="math inline">\(\mathbb{R}^n\)</span> and the codomain is <span class="math inline">\(\mathbb{R}^m\)</span>. For <span class="math inline">\(\vec{x}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span>, the vector <span class="math inline">\(T(\vec{x})\)</span> in <span class="math inline">\(\mathbb{R}^m\)</span> is called the image of <span class="math inline">\(\vec{x}\)</span> (under the action of <span class="math inline">\(T\)</span>). The set of all images <span class="math inline">\(T(\vec{x})\)</span> is called the range of <span class="math inline">\(T\)</span>. For each <span class="math inline">\(\vec{x}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span>, <span class="math inline">\(T(\vec{x})\)</span> is computed as <span class="math inline">\(\mathbf{A}\vec{x}\)</span>, where <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m \times n\)</span> matrix. For simplicity, we denote such a matrix transformation by <span class="math inline">\(\vec{x} \rightarrow \mathbf{A}\vec{x}\)</span>. Observe that the domain of <span class="math inline">\(T\)</span> is <span class="math inline">\(\mathbb{R}\)</span></li>
+</ul>
+<p><strong>Definition- Linear transformation:</strong></p>
+<p>A transformation (or mapping) <span class="math inline">\(T\)</span> is linear if:</p>
+<ul>
+<li><p><span class="math inline">\(T(\vec{u} + \vec{v}) = T(\vec{u}) + T(\vec{v})\)</span></p></li>
+<li><p><span class="math inline">\(T(c\vec{v}) = cT(\vec{v})\)</span></p></li>
+</ul>
+<p>for all <span class="math inline">\(\vec{v}, \vec{c}\)</span> in the domain of <span class="math inline">\(T\)</span> and for all scalars <span class="math inline">\(c\)</span>.</p>
+<ul>
+<li><p>A linear transformation is a special type of function.</p></li>
+<li><p>Every matrix transformation is a linear transformation. BUT not every linear transformation is a matrix transformation</p></li>
+<li><p>A linear transformation preserves the operations of vector addition and scalar multiplication.</p></li>
+<li><p>The superposition principle is a physical description of a linear transformation.</p></li>
+</ul>
+<p><strong>Miscellaneous:</strong></p>
+<ul>
+<li><p>If <span class="math inline">\(\mathbf{A}\)</span> is a <span class="math inline">\(3 \times 5\)</span> matrix and <span class="math inline">\(T\)</span> is a transformation defined by <span class="math inline">\(T(\vec{x}) = \mathbf{A}\vec{x}\)</span>, then the domain of <span class="math inline">\(T\)</span> is <span class="math inline">\(\mathbb{R}^3\)</span>. <strong>FALSE(</strong>The domain is <span class="math inline">\(\mathbb{R}^5\)</span> since domain is based on column not row.<strong>)</strong></p></li>
+<li><p>If <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m \times n\)</span> matrix, then the range of the transformation <span class="math inline">\(\vec{x} \rightarrow \mathbf{A}\vec{x}\)</span> is <span class="math inline">\(\mathbb{R}^m\)</span>. <strong>FALSE(</strong>The range is the set of all linear combinations of the columns of A<strong>)</strong></p></li>
+<li><p>A transformation <span class="math inline">\(T\)</span> is linear if and only if <span class="math inline">\(T(c_1\vec{v_1} + c_2\vec{v_2}) = c_1T(\vec{v_1}) + c_2T(\vec{v_2})\)</span> for all <span class="math inline">\(\vec{v_1}\)</span> and <span class="math inline">\(\vec{v_2}\)</span> in the domain of <span class="math inline">\(T\)</span> and for all scalars <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span>. <strong>TRUE(</strong>Since it’s linear, the factor can be factor out to form a linear equation<strong>)</strong></p></li>
+<li><p>The codomain of the transformation <span class="math inline">\(\vec{x} \rightarrow A\vec{x}\)</span> is the set of all linear combinations of the columns of <span class="math inline">\(A\)</span>. <strong>FALSE(</strong>If <span class="math inline">\(A\)</span> is an m x n matrix, the codomain is <span class="math inline">\(\mathbb{R}^m\)</span><strong>)</strong></p></li>
+<li><p>If <span class="math inline">\(T: \mathbb{R}^n \rightarrow \mathbb{R}^m\)</span> is a linear transformation and if <span class="math inline">\(\vec{c}\)</span> is in <span class="math inline">\(\mathbb{R}^m\)</span>, then a uniqueness question is “Is <span class="math inline">\(\vec{c}\)</span> in the range of <span class="math inline">\(T\)</span>?” <strong>FALSE(</strong>existence question<strong>)</strong></p></li>
+</ul>
 
 
 </section>

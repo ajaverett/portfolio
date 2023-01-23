@@ -341,3 +341,39 @@ Proof. By renumbering the vectors, we may suppose $\vec{v_1} = \vec{0}$. Then th
 -   If $\vec{v_1}, \dots, \vec{v_4}$ are in $\mathbb{R}^4$ and ${\vec{v_1}, \vec{v_2}, \vec{v_3}}$ is linearly dependent, then $\{\vec{v_1}, \dots, \vec{v_4}\}$ is also linearly independent **TRUE**
 
 -   If $\vec{v_1}, \dots, \vec{v_4}$ are linearly independent vectors in $\mathbb{R}^4$, then $\{{\vec{v_1}, \vec{v_2}, \vec{v_3}}\}$ is also linearly independent. \[Hint: Think about $x_1\vec{v_1} + x_2\vec{v_2} + x_3\vec{v_3} + 0\vec{v_4} = \vec{0}$.\] **TRUE**
+
+## Chapter 1.8 Review
+
+**Definition- Transformation:**
+
+-   A transformation (or function or mapping) $T$ from $\mathbb{R}^n$ to $\mathbb{R}^m$ is a rule that assigns to each vector $\vec{x}$ in $\mathbb{R}^n$ a vector $T(\vec{x})$ in $\mathbb{R}^m$. The set $\mathbb{R}^n$ is called the domain of $T$, and $\mathbb{R}^m$ is called the codomain of $T$. The notation $T: \mathbb{R}^n \rightarrow \mathbb{R}^m$ indicates that the domain of $T$ is $\mathbb{R}^n$ and the codomain is $\mathbb{R}^m$. For $\vec{x}$ in $\mathbb{R}^n$, the vector $T(\vec{x})$ in $\mathbb{R}^m$ is called the image of $\vec{x}$ (under the action of $T$). The set of all images $T(\vec{x})$ is called the range of $T$. For each $\vec{x}$ in $\mathbb{R}^n$, $T(\vec{x})$ is computed as $\mathbf{A}\vec{x}$, where $\mathbf{A}$ is an $m \times n$ matrix. For simplicity, we denote such a matrix transformation by $\vec{x} \rightarrow \mathbf{A}\vec{x}$. Observe that the domain of $T$ is $\mathbb{R}$
+
+**Definition- Linear transformation:**
+
+A transformation (or mapping) $T$ is linear if:
+
+-   $T(\vec{u} + \vec{v}) = T(\vec{u}) + T(\vec{v})$
+
+-   $T(c\vec{v}) = cT(\vec{v})$
+
+for all $\vec{v}, \vec{c}$ in the domain of $T$ and for all scalars $c$.
+
+-   A linear transformation is a special type of function.
+
+-   Every matrix transformation is a linear transformation. BUT not every linear transformation is a matrix transformation
+
+-   A linear transformation preserves the operations of vector addition and scalar multiplication.
+
+-   The superposition principle is a physical description of a linear transformation.
+
+**Miscellaneous:**
+
+-   If $\mathbf{A}$ is a $3 \times 5$ matrix and $T$ is a transformation defined by $T(\vec{x}) = \mathbf{A}\vec{x}$, then the domain of $T$ is $\mathbb{R}^3$. **FALSE(**The domain is $\mathbb{R}^5$ since domain is based on column not row.**)**
+
+-   If $\mathbf{A}$ is an $m \times n$ matrix, then the range of the transformation $\vec{x} \rightarrow \mathbf{A}\vec{x}$ is $\mathbb{R}^m$. **FALSE(**The range is the set of all linear combinations of the columns of A**)**
+
+-   A transformation $T$ is linear if and only if $T(c_1\vec{v_1} + c_2\vec{v_2}) = c_1T(\vec{v_1}) + c_2T(\vec{v_2})$ for all $\vec{v_1}$ and $\vec{v_2}$ in the domain of $T$ and for all scalars $c_1$ and $c_2$. **TRUE(**Since it's linear, the factor can be factor out to form a linear equation**)**
+
+-   The codomain of the transformation $\vec{x} \rightarrow A\vec{x}$ is the set of all linear combinations of the columns of $A$. **FALSE(**If $A$ is an m x n matrix, the codomain is $\mathbb{R}^m$**)**
+
+-   If $T: \mathbb{R}^n \rightarrow \mathbb{R}^m$ is a linear transformation and if $\vec{c}$ is in $\mathbb{R}^m$, then a uniqueness question is "Is $\vec{c}$ in the range of $T$?" **FALSE(**existence question**)**
