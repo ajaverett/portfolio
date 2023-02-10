@@ -11,7 +11,7 @@ format:
     toc-location: left
 ---
 
-Python's pandas and R's tidyverse are incredible tools to manipulate tabular data. Below is a "cheatsheet" to compare the different but similar commands in both languages.
+Python's pandas and R's tidyverse are incredible tools to manipulate tabular data. Below is a data science "Rosetta Stone" to compare the different but similar commands in both languages.
 
 # Create a dataframe
 
