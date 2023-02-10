@@ -195,7 +195,7 @@ df.drop(columns=['col_one','col_two'])
 ``` r
 df %>% rename(col_1 = column_one)
 df %>% rename(col_1 = column_one, 
-                              col_2 = column_two
+              col_2 = column_two
 )
 ```
 
@@ -204,7 +204,7 @@ df %>% rename(col_1 = column_one,
 ``` python
 df.rename(columns={"column_one": "col_1"})
 df.rename(columns={"column_one": "col_1", 
-                                       "column_two": "col_2"}
+                   "column_two": "col_2"}
 )
 ```
 
@@ -233,7 +233,7 @@ df[c(1,6),]
 df[c(1:6),]
 df[,'col_one']
 df[,c('col_one','col_three')]
-NA
+df %>% select(col_one:col_three)
 df[,c(1,3)]
 df[,c('1:3')]
 ```
@@ -275,20 +275,23 @@ df.query("not (Race == 'White' and Gender == 'Male')")
 # Query by string
 
 **tidyverse**
-
-    df.query('col1.str.contains("string").values')
-    df.query('col1.str.contains(["string1", "string2"]).values')
-    df.query('col1.str.startswith("string").values')
-    df.query('col1.str.endswith("string").values')
-    df.query('col1.str.match("regex_pattern").values')
-
-**pandas**
-
+``` r
     df %>% filter(str_detect(col1, "string"))
     df %>% filter(str_detect(col1, c("string1", "string2")))
     df %>% filter(str_starts(col1, "string"))
     df %>% filter(str_ends(col1, "string"))
     df %>% filter(str_match(col1, "regex_pattern"))
+    ```
+    
+**pandas**
+``` python
+    df.query('col1.str.contains("string").values')
+    df.query('col1.str.contains(["string1", "string2"]).values')
+    df.query('col1.str.startswith("string").values')
+    df.query('col1.str.endswith("string").values')
+    df.query('col1.str.match("regex_pattern").values')
+```
+
 
 # Sort a dataframe by a column's value
 
@@ -347,7 +350,7 @@ df['col_one'].replace(2,"foo")
 ``` r
 df %>% drop_na
 df %>% drop_na(c("col_one", "col_two"))
-NA
+df %>% select(where(~mean(is.na(.)) < n)) #percent threshold
 ```
 
 **pandas**
@@ -355,7 +358,7 @@ NA
 ``` python
 df.dropna()
 df.dropna(subset=['col_one', 'col_two'])
-df.dropna(thresh=n)
+df.dropna(thresh=n) #integer threshold
 ```
 
 # Fill NA's in a column
@@ -365,7 +368,7 @@ df.dropna(thresh=n)
 ``` r
 df %>% replace(is.na(.), x)
 df %>% mutate(col_one = ifelse(is.na(col_one),x,col_one))
-NA
+df %>% fill(col_one, .direction = "up")
 df %>% mutate(col_one= ifelse(is.na(col_one), mean(df$col_one, na.rm = T), col_one))
 ```
 
