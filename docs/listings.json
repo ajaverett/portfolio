@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/usa_christian/readme.html",
       "/posts/lin_alg_rev/index.html",
       "/posts/pandasvtidy/index.html",
       "/posts/lin_reg/index.html",
