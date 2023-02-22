@@ -1,7 +1,7 @@
 ---
 title: "Dynamic Visualization using Anime"
 author: "Aj Averett"
-date: "2023-1-21"
+date: "2023-2-21"
 categories: [anime, visualization]
 image: "killua.png"
 jupyter: python3
