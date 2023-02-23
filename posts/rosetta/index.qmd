@@ -1,0 +1,22 @@
+---
+title: "Rosetta Stone for Data Science"
+author: "Aj Averett"
+date: "2023-2-23"
+image: 'rosetta.webp'
+---
+
+# A zoo of tools
+
+There are countless data science languages and tools for data processing and analysis. Since the various tools used by data analysts each have their own unique syntax and approach to data manipulation, it may seem challenging for users to switch between them. To address this challenge, I made a "Rosetta Stone" to provide users with the equivalent functions and phrases for analysis, allowing users to easily compare and switch between them. Since functionality (by design) is not supposed to be the same between these libraries and languages, the primary goal of this tool is just to allow people to get a better grasp on syntax.
+
+**Included in the Rosetta Stone:**
+
+-   **Pandas:** Pandas is a Python library that provides data structures for efficient data manipulation and analysis. It is widely used for data cleaning, exploration, and visualization.
+
+-   **Tidyverse:** The tidyverse is a collection of R packages designed for data science, which includes tools for data wrangling, visualization, and modeling.
+
+-   **Polars:** Polars is a newer library designed for fast and efficient data manipulation and analysis
+
+-   **SQL:** SQL is most different from the other libraries on this list. While it works with tables of data, the setting is designed for a lower level approach.
+
+Play with the tool [**here**](https://rosetta.streamlit.app/):
