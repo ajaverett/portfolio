@@ -1,0 +1,34 @@
+---
+title: "Querying conspiracies with Reddit"
+author: "Aj Averett"
+date: "2023-3-2"
+categories: [visualization, streamlit, python, politics]
+image: "eye.jpg"
+jupyter: python3
+---
+
+# That's just a theory...
+
+Are you tired of scrolling through endless conspiracy theories on Reddit without any sense of direction or purpose? Do you want to know what topics are actually trending over time? Look no further, because this Streamlit app has got you covered! With just a few clicks, you can dive into the world of conspiracies and gain valuable insights into the Reddit community's most popular theories. So put on your tin foil hat and join us on this exciting adventure!
+
+This Streamlit page is a data analysis tool that allows users to explore and visualize public forum data related to conspiracy theories. The tool loads in a dataset of Reddit posts that mention a specific query, which can be selected based on different genres such as governmental, corporate, scientific, and other.
+
+# How to Use the App
+
+1.  Select the topic you would like to see trends on. Select the query from the selected topic that you would like to see trends on.
+
+2.  Select the subreddits you want to include using the checkboxes for *r/Politics*, *r/PoliticalDiscussion*, *r/conspiracy*, and *r/Freethought*.
+
+3.  Input a secondary query to see how often it appears in the posts related to the initial query.
+
+4.  Adjust the chart's width to your liking. Hover over the chart to see the number of posts for each month.
+
+5.  Use the legend to toggle between mentions of the initial query and mentions of both the initial and secondary queries.
+
+6.  Play around with the various graph settings, including downloading the graph as a PNG, zooming in and out, panning across the graph, autoscaling the graph, resetting the axes, and viewing the graph in fullscreen mode.
+
+**What is Reddit?**
+
+Reddit is a social media site with various forums called subreddits. Our site used PRAW to collect data from four subreddits specifically: Conspiracy, Politics, PoliticalDiscussion, and Freethought. To collect this data, we use Reddit's builtin API. The information is up to date to February 2023. While this tool may not query every post on reddit with their respective search term, this tool is for general trends.
+
+**Check out the website [here](https://reddit-conspiracy-trends.streamlit.app/).**

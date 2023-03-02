@@ -2,7 +2,7 @@
 title: "The P-value"
 author: "Aj Averett"
 date: "2022-12-31"
-categories: [statistics, anime]
+categories: [statistics, anime, python]
 image: "curve.png"
 jupyter: python3
 ---

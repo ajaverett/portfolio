@@ -2,7 +2,7 @@
 title: "State of American Christianity"
 author: "Aj Averett"
 date: "2023-1-14"
-categories: [religion]
+categories: [religion, r, visualization]
 image: "chreaster.png"
 format:
   html:

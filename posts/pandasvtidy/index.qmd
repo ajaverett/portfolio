@@ -2,7 +2,7 @@
 title: "Pandas vs Tidyverse"
 author: "Aj Averett"
 date: "2023-1-20"
-categories: [statistics]
+categories: [statistics, python, r, notation]
 image: 'rpython.png'
 toc-title: Contents
 format:

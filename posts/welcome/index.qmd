@@ -2,7 +2,7 @@
 title: "A Quick Review"
 author: "Aj Averett"
 date: "2022-12-30"
-categories: [statistics]
+categories: [statistics, r]
 ---
 
 # Central Tendency

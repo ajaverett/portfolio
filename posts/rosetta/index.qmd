@@ -3,6 +3,7 @@ title: "Rosetta Stone for Data Science"
 author: "Aj Averett"
 date: "2023-2-23"
 image: 'rosetta.webp'
+categories: [statistics, python, r, notation]
 ---
 
 # A zoo of tools
