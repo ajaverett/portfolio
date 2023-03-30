@@ -249,6 +249,6 @@
     "href": "posts/pca/pca.html#pc6",
     "title": "A county like mine",
     "section": "PC6",
-    "text": "PC6\nProbably measures racial diversity and crime\n\n\nCode\nPC6\n\n\ncrime_rate_per_100k    0.253964\nhispanic               0.253551\nag_assault             0.252535\nrape                   0.248669\nblack                 -0.237223\nName: PC6, dtype: float64"
+    "text": "PC6\nProbably measures a variable related to something with race and crime\n\n\nCode\nPC6\n\n\ncrime_rate_per_100k    0.253964\nhispanic               0.253551\nag_assault             0.252535\nrape                   0.248669\nblack                 -0.237223\nName: PC6, dtype: float64"
   }
 ]

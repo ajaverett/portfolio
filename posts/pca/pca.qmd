@@ -9,6 +9,7 @@ format:
   html:
     code-fold: true
 ---
+
 Principal Component Analysis (PCA) is a statistical technique used to simplify complex data by reducing the number of variables while retaining most of the original information. In other words, it helps to identify the most important patterns or relationships in large datasets by transforming them into a set of linearly uncorrelated variables, known as principal components.
 
 PCA works by identifying the underlying structure of the data and extracting the directions of maximum variance, which are the principal components. Each principal component is a linear combination of the original variables, and they are orthogonal to each other, meaning that they are uncorrelated. The first principal component captures the most significant variation in the data, and subsequent components capture decreasing amounts of variation. By selecting the appropriate number of principal components, we can reduce the dimensionality of the dataset while retaining the essential information.
@@ -141,7 +142,11 @@ def pca_variance(pca):
 
 # Poverty
 
-Poverty variables: \* percent of population below poverty level overall in county 2020 (pct_povall_2020) \* percent of population below poverty level for minors in county 2020 (pct_pov017_2020) \* median household income in county 2020 (medhhinc_2020)
+Poverty variables:
+
+-   percent of population below poverty level overall in county 2020 (pct_povall_2020)
+-   percent of population below poverty level for minors in county 2020 (pct_pov017_2020)
+-   median household income in county 2020 (medhhinc_2020)
 
 ```{python}
 # Poverty Estimates
@@ -156,7 +161,12 @@ pov = pov[pov_filtered_columns]
 
 # Education
 
-Education variables: \* percent of population with less than high school diploma in county 2017-2021 (pct_less_than_hs_2017_21) \* percent of population with high school diploma in county 2017-2021 (pct_hs_diploma_2017_21) \* percent of population with some college or associate degree in county 2017-2021 (pct_some_college_assoc_degree_2017_21) \* percent of population with bachelor's degree or higher in county 2017-2021 (pct_bachelors_plus_2017_21)
+Education variables:
+
+-   percent of population with less than high school diploma in county 2017-2021 (pct_less_than_hs_2017_21)
+-   percent of population with high school diploma in county 2017-2021 (pct_hs_diploma_2017_21)
+-   percent of population with some college or associate degree in county 2017-2021 (pct_some_college_assoc_degree_2017_21)
+-   percent of population with bachelor's degree or higher in county 2017-2021 (pct_bachelors_plus_2017_21)
 
 ```{python}
 # Education
@@ -496,7 +506,8 @@ PC6 = loadings.reindex(loadings['PC6'].abs().sort_values(ascending=False).index)
 ```
 
 ## PC1
-The first principal component seems to be some measure of traditional metrics of the society including how White the population is, both religious and nonreligious organizations,  low criminality, and percent married.
+
+The first principal component seems to be some measure of traditional metrics of the society including how White the population is, both religious and nonreligious organizations, low criminality, and percent married.
 
 ```{python}
 PC1
@@ -519,21 +530,24 @@ PC3
 ```
 
 ## PC4
-The fourth principal component seems to be some negative measure of civic engagement and social capital. 
+
+The fourth principal component seems to be some negative measure of civic engagement and social capital.
 
 ```{python}
 PC4
 ```
 
-
 ## PC5
+
 Not exactly sure what this principal component is measuring.
+
 ```{python}
 PC5
 ```
 
 ## PC6
-Probably measures racial diversity and crime
+
+Probably measures a variable related to something with race and crime
 
 ```{python}
 PC6
