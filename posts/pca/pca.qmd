@@ -477,3 +477,64 @@ fig.update_layout(
 
 fig.show()
 ```
+
+```{python}
+loadings = pd.DataFrame(pca.components_.T, columns=[f'PC{i}' for i in range(1, num_components+1)], index=df_raw.columns[3:]) 
+
+PC1 = loadings.reindex(loadings['PC1'].abs().sort_values(ascending=False).index)['PC1'].head()
+
+PC2 = loadings.reindex(loadings['PC2'].abs().sort_values(ascending=False).index)['PC2'].head()
+
+PC3 = loadings.reindex(loadings['PC3'].abs().sort_values(ascending=False).index)['PC3'].head()
+
+PC4 = loadings.reindex(loadings['PC4'].abs().sort_values(ascending=False).index)['PC4'].head()
+
+PC5 = loadings.reindex(loadings['PC5'].abs().sort_values(ascending=False).index)['PC5'].head()
+
+PC6 = loadings.reindex(loadings['PC6'].abs().sort_values(ascending=False).index)['PC6'].head()
+
+```
+
+## PC1
+The first principal component seems to be some measure of traditional metrics of the society including how White the population is, both religious and nonreligious organizations,  low criminality, and percent married.
+
+```{python}
+PC1
+```
+
+## PC2
+
+The second principal component seems to be some measure of how economically disadvantaged the population is, with measures like poverty rate highly correlated and median household income negatively correlated. Interestingly, religious congregations and teen births per 1k is also highly correlated with this principal component. It seems like this principal component has some aspects of traditionality of the society, but the negative aspects of it.
+
+```{python}
+PC2
+```
+
+## PC3
+
+The third principal component seems to be some measure of how busy the area is. It is highly correlated with the percent of the population that is employed in the management, production, and construction industry.
+
+```{python}
+PC3
+```
+
+## PC4
+The fourth principal component seems to be some negative measure of civic engagement and social capital. 
+
+```{python}
+PC4
+```
+
+
+## PC5
+Not exactly sure what this principal component is measuring.
+```{python}
+PC5
+```
+
+## PC6
+Probably measures racial diversity and crime
+
+```{python}
+PC6
+```
