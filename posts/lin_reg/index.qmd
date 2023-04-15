@@ -1,0 +1,127 @@
+---
+title: "Simple Linear Regression"
+author: "Aj Averett"
+date: "2023-1-16"
+image: 'reg.png'
+categories: [statistics]
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Defining terms
+
+## The Data
+
+You have a dataset where each row represents an individual sample and
+each column represents a variable about each sample.
+
+-   $n$ refers to the total number of samples you have
+
+-   $\vec{x}$ refers to the independent variable column in your data
+
+-   $\vec{y}$ refers to the dependent variable column in your data
+
+-   We will use the notation $x_i$ and $y_i$ to denote the$i$th
+    observations of $x$ and $y$, respectively.This would mean, for
+    example: $x_1$ would refer to the first x value in your data while
+    $y_n$ would refer to the last y value in your data
+
+## The Line
+
+The goal of simple linear regression is to find the line of best fit,
+which is represented by the equation $f(x)=\beta_0+\beta_1x$ , where
+$\beta_1$ is the slope of the line and $\beta_0$ is the y-intercept. The
+function $f(x)$ will find any $\hat{y_i}$ which is the predicted y value
+of $x_i$ with a best fit line.
+
+## Minimizing Residuals
+
+Given any line, we can calculate how different our predicted value,
+$\hat{y_i}$ is from our actual data point, $y_i$. This vertical distance
+from the real y output and the predicted y output is called the
+residual. The residual for a given point is calculated as
+$e_i = y_i - \hat{y_i}$.
+
+The goal of simple linear regression is to minimize the sum of the
+squared residuals, also known as the residual sum of squares ($RSS$).
+This is represented by the equations:
+
+$$\sum_{i=1}^n \left(e_i\right)^2 \text{ or } \sum_{i=1}^n\left(y_i - \hat{y_i}\right)^2 \text{ or } \sum_{i=1}^n\left(y_i - (\beta_0+\beta_1x_i)\right)^2$$.
+
+The closer any given line is to the best fit line, the lower the $RSS$
+will be. In fact, the best fit line represents the line with the lowest
+possible $RSS$. This line is found by manipulating the values for
+$\beta_0$ and $\beta_1$ since the x values must stay the same.
+
+## The Calculus Behind Best Fit
+
+There exists a combination of $\beta_0$ and $\beta_1$ that is the
+lowest. Geometrically, we can imagine a shape in three dimensions where
+two inputs ($\beta_0$ and $\beta_1$) produce an output ($RSS$). Roughly
+speaking, where the three dimensional slope is equal to 0 is where the
+combination of $\beta_0$ and $\beta_1$ will produce the lowest possible
+$RSS$. Since the derivative of an equation can tell us the slope at any
+given point, we can set both equations' derivatives to zero to find
+where slope is zero for both equations.
+
+**Step One: Take the partial derivatives with respect to** $\beta_0$ and
+$\beta_1$
+
+The partial derivative with respect to $\beta_0$ is calculated as so:
+
+$$\frac{\partial}{\partial\beta_0}\sum_{i=1}^n\left(y_i - (\beta_0+\beta_1x_i)\right)^2$$
+$$
+\begin{align*}
+\mathscr{}
+&= \sum_{i=1}^n\frac{\partial}{\partial\beta_0}\left(y_i - (\beta_0+\beta_1x_i)\right)^2  &\text{Sum Rule}\\
+&= \sum_{i=1}^n2\left(y_i - (\beta_0+\beta_1x_i)\right)\frac{\partial}{\partial\beta_0}\left(y_i - (\beta_0+\beta_1x_i)\right) &\text{Power Rule}\\
+&= \sum_{i=1}^n 2\left(y_i - (\beta_0+\beta_1x_i)\right)(-1) &\text{Simplify}\\
+&= -2\sum_{i=1}^n\left(y_i - (\beta_0+\beta_1x_i)\right) &\text{Constant Multiple Rule for Sums}
+\end{align*}
+$$
+
+The partial derivative with respect to $\beta_1$ is calculated as so:
+
+$$\frac{\partial}{\partial\beta_1}\sum_{i=1}^n\left(y_i - (\beta_0+\beta_1x_i)\right)^2$$
+$$
+\begin{align*}
+\mathscr{}
+&= \sum_{i=1}^n\frac{\partial}{\partial\beta_1}\left(y_i - (\beta_0+\beta_1x_i)\right)^2  &\text{Sum Rule}\\
+&= \sum_{i=1}^n2\left(y_i - (\beta_0+\beta_1x_i)\right)\frac{\partial}{\partial\beta_1}\left(y_i - (\beta_0+\beta_1x_i)\right) &\text{Power Rule}\\
+&= \sum_{i=1}^n 2\left(y_i - (\beta_0+\beta_1x_i)\right)(-x_i) &\text{Simplify}\\
+&= -2\sum_{i=1}^nx_i\left(y_i - (\beta_0+\beta_1x_i)\right) &\text{Constant Multiple Rule for Sums}
+\end{align*}
+$$
+
+**Step Two: Set the simplified partial derivatives to zero and solve
+for** $\beta_0$ **and** $\beta_1$ **respectively**
+
+Solving for $\beta_0$:
+$$0 = -2\sum_{i=1}^n\left(y_i - (\beta_0+\beta_1x_i)\right)$$
+
+$$
+\begin{align*}
+\mathscr{}
+&0 = \sum_{i=1}^n\left(y_i - \beta_0-\beta_1x_i\right) &\text{Simplify}\\
+&0 = \sum_{i=1}^ny_i - \sum_{i=1}^n\beta_0-\sum_{i=1}^n\beta_1x_i &\text{Sum Rule}\\
+&0 = \sum_{i=1}^ny_i - n\beta_0-\beta_1\sum_{i=1}^nx_i &\text{Constant Multiple Rule for Sums}\\
+& n\beta_0 = \sum_{i=1}^ny_i -\beta_1\sum_{i=1}^nx_i &\text{Simplify}\\
+& \beta_0 = \frac{\sum_{i=1}^ny_i}{n} -\frac{\beta_1\sum_{i=1}^nx_i}{n} &\text{Simplify}\\
+& \beta_0 = \bar{y} - \beta_1\bar{x} &\text{Simplify to 'Average'}\\
+\end{align*}
+$$
+
+Solving for $\beta_1$ while substituting $\beta_0$:
+
+$$0 = -2\sum_{i=1}^nx_i\left(y_i - (\beta_0+\beta_1x_i)\right)$$
+$$
+\begin{align*}
+\mathscr{}
+&0 = \sum_{i=1}^nx_i\left(y_i - ((\bar{y} - \beta_1\bar{x})+\beta_1x_i)\right) &\text{Substitute }\beta_0\\
+&0 = \sum_{i=1}^nx_i(y_i-\bar{y}) - \sum_{i=1}^n\beta_1x_i(x_i-\bar{x})&\text{Sum Rule}\\
+&0 = \sum_{i=1}^nx_i(y_i-\bar{y}) - \beta_1\sum_{i=1}^nx_i(x_i-\bar{x})&\text{Constant Multiple Rule for Sums}\\
+& \beta_1= \frac{\sum_{i=1}^nx_i(y_i-\bar{y})}{\sum_{i=1}^nx_i(x_i-\bar{x})} &\text{Simplify}\\
+& \beta_1= \frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2} &\text{Simplify (steps skipped)}\\
+\end{align*}
+$$

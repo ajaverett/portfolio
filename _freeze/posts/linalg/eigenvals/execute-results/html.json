@@ -1,0 +1,11 @@
+{
+  "hash": "99ba345dcd96095e0d0b973afc1b8682",
+  "result": {
+    "markdown": "---\ntitle: \"Untitled\"\nformat: html\n---\n\n# Introduction to Eigenvalues\n\nThe **eigenvalue-eigenvector equation** is the equation $A\\mathbf{x} = \\lambda \\mathbf{x}$. Any non-zero vector that satisfies the equation for scalar $\\lambda$ is an eigenvalue $\\lambda$.\n\n",
+    "supporting": [
+      "eigenvals_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
