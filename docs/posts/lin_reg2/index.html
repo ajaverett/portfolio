@@ -415,6 +415,56 @@ The Calculus Behind Best Fit
 </section>
 </div>
 </div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Least Squares in Linear Algebra
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<section id="least-squares-in-linear-algebra-1" class="level1 callout-body-container callout-body">
+<h1>Least Squares in Linear Algebra</h1>
+<p><strong>Step One: Organize the data into vectors</strong> Let’s assume you have <span class="math inline">\(n\)</span> observations of the independent variable <span class="math inline">\(\mathbf{X}\)</span> and dependent variable <span class="math inline">\(\mathbf{Y}\)</span>. Organize the data into two vectors:</p>
+<p><span class="math display">\[
+\mathbf{X} = \begin{bmatrix} X_1 \\ X_2 \\ \vdots \\ X_n \end{bmatrix}, \quad \mathbf{Y} = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\ Y_n \end{bmatrix}
+\]</span></p>
+<p><strong>Step Two: Create a design matrix</strong></p>
+<p>Create a design matrix <span class="math inline">\(\mathbf{A}\)</span> by adding a column of ones to represent the intercept term</p>
+<p><span class="math display">\[
+\mathbf{A} = \begin{bmatrix} 1 &amp; X_1 \\ 1 &amp; X_2 \\ \vdots &amp; \vdots \\ 1 &amp; X_n \end{bmatrix}
+\]</span></p>
+<p><strong>Step Three: Make a Projection:</strong></p>
+<p>The goal of simple linear regression is to find the best-fitting line, which can be viewed as projecting the dependent variable <span class="math inline">\(\mathbf{Y}\)</span> onto the column space of the design matrix <span class="math inline">\(\mathbf{A}\)</span>. This projection, denoted by <span class="math inline">\(\mathbf{\hat{Y}}\)</span>, can be computed as:</p>
+<p><span class="math display">\[
+\mathbf{\hat{Y}} = \mathbf{A}(\mathbf{A}^T\mathbf{A})^{-1}\mathbf{A}^T\mathbf{Y}
+\]</span></p>
+<p>This formula comes from the orthogonal projection of <span class="math inline">\(\mathbf{Y}\)</span> onto the column space of <span class="math inline">\(\mathbf{A}\)</span>, which minimizes the squared residuals.</p>
+<p><strong>Step Four: Compute the coefficients:</strong></p>
+<p>The coefficients of the best-fitting line can be found by solving the following linear system:</p>
+<p><span class="math display">\[
+\mathbf{A}^T\mathbf{A}\mathbf{\beta} = \mathbf{A}^T\mathbf{Y}
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathbf{\beta}\)</span> is a vector containing the coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>:</p>
+<p><span class="math display">\[
+\mathbf{\beta} = \begin{bmatrix} \beta_0 \\ \beta_1 \end{bmatrix}
+\]</span></p>
+<p>To solve for <span class="math inline">\(\mathbf{\beta}\)</span>, you can use the following formula:</p>
+<p><span class="math display">\[
+\mathbf{\beta} = (\mathbf{A}^T\mathbf{A})^{-1}\mathbf{A}^T\mathbf{Y}
+\]</span></p>
+<p><strong>Step Five: Construct the formula:</strong></p>
+<p>Once you have computed the coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, you can write the estimated regression line as:</p>
+<p><span class="math display">\[
+\hat{Y}_i = \beta_0 + \beta_1 X_i
+\]</span></p>
+<p>The estimated slope, <span class="math inline">\(\beta_1\)</span>, indicates the average change in the dependent variable (<span class="math inline">\(Y\)</span>) for a one-unit increase in the independent variable (<span class="math inline">\(X\)</span>). The estimated intercept, <span class="math inline">\(\beta_0\)</span>, represents the predicted value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X = 0\)</span>.</p>
+</section>
+</div>
+</div>
 <p>The formula from calculus to find the coefficients for the estimated regression line is as so:</p>
 <ul>
 <li><p><span class="math inline">\(b_0 = \bar{Y} - b_1\bar{X}\)</span></p></li>
@@ -422,7 +472,7 @@ The Calculus Behind Best Fit
 </ul>
 <p>(<span class="math inline">\(\bar{Y}\)</span> represents the mean of the <span class="math inline">\(Y\)</span> values and <span class="math inline">\(\bar{X}\)</span> represents the mean of the <span class="math inline">\(X\)</span> values)</p>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -431,7 +481,7 @@ R code for calculating the coefficients for the estimated regression line
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
@@ -549,7 +599,7 @@ Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i :\epsilon \sim \mathcal{N}(0,\sigma^2)\)</span></p>
 <p>Given <span class="math inline">\(X\)</span>, <span class="math inline">\(Y \sim \mathcal{N}(\beta_0 +\beta_1X,\sigma^2)\)</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -558,7 +608,7 @@ R code for testing the assumptions for simple linear regression
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Three plots in R can be used to test the assumptions for simple linear regression:</p>
 <p><strong>Residuals versus Fitted-values Plot</strong> The linear relationship and constant variance assumptions can be diagnosed using a residuals versus fitted-values plot. The fitted values are the <span class="math inline">\(Y^i\)</span></p>
@@ -600,7 +650,7 @@ R code for testing the assumptions for simple linear regression
 <p><img src="images/paste-1.png" class="img-fluid" width="544"></p>
 <p><span class="math inline">\(\text{SSTO}=\text{SSE}+\text{SSR}\)</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -609,7 +659,7 @@ R code for calculating the above terms
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> mylm<span class="sc">$</span>residuals</span>
@@ -645,7 +695,7 @@ R code for calculating the above terms
 R^2 = 1-\frac{\text{SSE}}{\text{SSTO}}
 \]</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -654,7 +704,7 @@ R code for calculating the coefficient of determination
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>lm_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mylm)</span>
