@@ -60,34 +60,57 @@ $$
 
 -   $b_1$ - Estimated slope, also $\hat{\beta}_1$
 
-## Assumption for Simple Linear Regression
+::: {.callout-note collapse="true"}
+# R code for calling your data
 
-If we are to make a model off the points displayed as such:
+```{r}
+#| warning: false
+library(tidyverse)
 
-$$
-Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
-$$
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(shape = 21, color = 'skyblue4', fill = 'skyblue', size = 3) +
+  labs(title="Miles per Gallon vs. Weight of Car", 
+       x="Weight of Car", 
+       y="Miles per Gallon") +
+  theme_classic()  
 
-We need to confirm the following assumptions
+```
 
--   **1) Linear relation**: Linear relationship between $X$ and $Y$
+```{r}
+```
 
--   **2) Normal errors**: $\epsilon \sim \mathcal{N}(0,\sigma^2)$, the
-    error terms are normally distributed with a mean of 0
+```{r}
+Y <- mtcars$mpg 
+X <- mtcars$wt
 
--   **3) Constant variance**: The variance $σ^2$ of the error terms is
-    constant (the same) across all values of $X_i$
+i <- 3 #random number
+```
 
--   **4) Fixed** $X$: the $X$ values can be considered fixed and
-    measured without error
+```{r}
+X[i]
+```
 
--   **5) Independent errors**: $\epsilon$ is independent
+```{r}
+Y[i]
+```
 
-$Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i :\epsilon \sim \mathcal{N}(0,\sigma^2)$
+```{r}
+#| warning: false
+library(tidyverse)
 
-Given $X$, $Y \sim \mathcal{N}(\beta_0 +\beta_1X,\sigma^2)$
+ggplot(mtcars, aes(x=wt, y=mpg)) + 
+  geom_point(shape = 21, color = 'skyblue4', fill = 'skyblue', size = 3) +
+  labs(title="Miles per Gallon vs. Weight of Car", 
+       x="Weight of Car", y="Miles per Gallon") +
+  theme_classic() +
+  geom_vline(aes(xintercept = wt[i] ), color = "red", linetype = "dashed") +
+  geom_hline(aes(yintercept = mpg[i]), color = "red", linetype = "dashed")
 
-## Making the Estimated Regression Line
+
+```
+:::
+
+## Residuals and the Sum of Squared Errors
 
 The estimated regression line or line of best fit from the observed
 points is represented by the equation $\hat{Y}_i=b_0+b_1X_i$ , where
@@ -127,7 +150,15 @@ with the lowest possible $\text{SSE}$. This line is found by
 manipulating the values for $b_0$ and $b_1$ since the $X$ values must
 stay the same.
 
-### The Calculus Behind Best Fit
+## Calculating the Estimated Regression Line
+
+There are multiple ways to calculate the estimated regression line like
+with calculus or linear algebra.
+
+::: {.callout-tip collapse="true"}
+## The Calculus Behind Best Fit
+
+# The Calculus Behind Best Fit
 
 There exists a combination of $b_0$ and $b_1$ that is the lowest.
 Geometrically, we can imagine a shape in three dimensions where two
@@ -186,7 +217,11 @@ $$
 
 Solving for $b_1$ while substituting $b_0$:
 
-$$0 = -2\sum_{i=1}^nX_i\left(Y_i - (b_0+b_1X_i)\right)$$ $$
+$$
+0 = -2\sum_{i=1}^nX_i\left(Y_i - (b_0+b_1X_i)\right)
+$$
+
+$$
 \begin{align*}
 \mathscr{}
 &0 = \sum_{i=1}^nX_i\left(Y_i - ((\bar{Y} - b_1\bar{X})+b_1X_i)\right) &\text{Substitute }b_0\\
@@ -210,9 +245,123 @@ represents the mean of the $X$ values)
 
 We can construct the formula for $\hat{Y}_i$ as the following:
 
-$$\hat{Y}_i = b_0 + b_1X_i$$
+$$
+\hat{Y}_i = b_0 + b_1X_i
+$$
+
 Which means $b_0$ is the change in the mean of $Y$ for a $1$ unit
 increase in $X$.
+:::
+
+The formula from calculus to find the coefficients for the estimated
+regression line is as so:
+
+-   $b_0 = \bar{Y} - b_1\bar{X}$
+
+-   $b_1= \frac{\sum_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sum_{i=1}^n(X_i-\bar{X})^2}$
+
+($\bar{Y}$ represents the mean of the $Y$ values and $\bar{X}$
+represents the mean of the $X$ values)
+
+::: {.callout-note collapse="true"}
+# R code for calculating the coefficients for the estimated regression line
+
+```{r}
+mylm <- lm(mpg ~ wt, data = mtcars)
+pander::pander(summary(mylm))
+```
+
+```{r}
+b_0 <- mylm$coefficients[1]
+b_1 <- mylm$coefficients[2]
+```
+
+```{r}
+b_0
+```
+
+```{r}
+b_1
+```
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+geom_point(shape = 21, color = 'skyblue4', fill = 'skyblue', size = 3) +
+stat_function(fun = function(x) b_0 + b_1 * x) + 
+labs(title="Miles per Gallon vs. Weight of Car", 
+     x="Weight of Car", 
+     y="Miles per Gallon") +
+theme_classic() 
+```
+:::
+
+## Assumption for Simple Linear Regression
+
+If we are to make a model off the points displayed as such:
+
+$$
+Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
+$$
+
+We need to confirm the following assumptions
+
+-   **1) Linear relation**: Linear relationship between $X$ and $Y$
+
+-   **2) Normal errors**: $\epsilon \sim \mathcal{N}(0,\sigma^2)$, the
+    error terms are normally distributed with a mean of 0
+
+-   **3) Constant variance**: The variance $σ^2$ of the error terms is
+    constant (the same) across all values of $X_i$
+
+-   **4) Fixed** $X$: the $X$ values can be considered fixed and
+    measured without error
+
+-   **5) Independent errors**: $\epsilon$ is independent
+
+$Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i :\epsilon \sim \mathcal{N}(0,\sigma^2)$
+
+Given $X$, $Y \sim \mathcal{N}(\beta_0 +\beta_1X,\sigma^2)$
+
+::: {.callout-note collapse="true"}
+# R code for testing the assumptions for simple linear regression
+
+Three plots in R can be used to test the assumptions for simple linear
+regression:
+
+**Residuals versus Fitted-values Plot** The linear relationship and
+constant variance assumptions can be diagnosed using a residuals versus
+fitted-values plot. The fitted values are the $Y^i$
+
+-   The residuals are the $r_i$
+
+-   This plot compares the residual to the magnitude of the
+    fitted-value. No discernable pattern in this plot is desirable.
+
+**Q-Q Plot of the Residuals**
+
+The normality of the error terms can be assessed by considering a normal
+probability plot (Q-Q Plot) of the residuals. If the residuals appear to
+be normal, then the error terms are also considered to be normal. If the
+residuals do not appear to be normal, then the error terms are also
+assumed to violate the normality assumption.
+
+**Residuals versus Order Plot**
+
+When the data is collected in a specific order, or has some other
+important ordering to it, then the independence of the error terms can
+be assessed. This is typically done by plotting the residuals against
+their order of occurrance. If any dramatic trends are visible in the
+plot, then the independence assumption is violated.
+
+```{r}
+par(mfrow=c(1,3)) #Residuals versus Fitted-values Plot: Checks Assumptions #1 and #3
+
+plot(mylm,which=1:2) #Q-Q Plot of the Residuals: Checks Assumption #2
+
+plot(mylm$residuals) #Residuals versus Order Plot: Checks Assumption #5
+
+```
+:::
 
 ## Assessing the Estimated Regression Line
 
@@ -240,7 +389,26 @@ $\text{SSTO} = \sum_{i=1}^n \left(Y_i - \bar{Y}\right)^2$
 
 $\text{SSTO}=\text{SSE}+\text{SSR}$
 
-### Calculating the Coefficient of Determination
+::: {.callout-note collapse="true"}
+# R code for calculating the above terms
+
+```{r}
+residuals <- mylm$residuals
+fitted_values <- mylm$fitted.values
+mean_mpg <- mean(mtcars$mpg)
+
+SSE <- sum(residuals^2)
+SSR <- sum((fitted_values - mean_mpg)^2)
+TSS <- sum((mtcars$mpg - mean_mpg)^2)
+
+pander::pander(cat("Sum of Squared Errors (SSE):", SSE, "\n"))
+pander::pander(cat("Sum of Squares Regression (SSR):", SSR, "\n"))
+pander::pander(cat("Total Sum of Squares (TSS):", TSS, "\n"))
+```
+
+:::
+
+## Calculating the Coefficient of Determination
 
 Using the terms above, we can calculate a ratio of the variance of $Y$
 explained by the estimated regression line ($\text{SSE}$) and the total
@@ -249,3 +417,13 @@ variance of $Y$ from the average $Y$ value ($\text{SSTO}$.
 $$
 R^2 = 1-\frac{\text{SSE}}{\text{SSTO}}
 $$
+
+::: {.callout-note collapse="true"}
+# R code for calculating the coefficient of determination
+
+```{r}
+lm_summary <- summary(mylm)
+
+pander::pander(lm_summary$r.squared)
+```
+:::
