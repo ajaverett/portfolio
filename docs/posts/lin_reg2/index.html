@@ -123,13 +123,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="../../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -171,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Linear Regression Guide</h1>
@@ -204,52 +212,163 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#building-an-r2" id="toc-building-an-r2" class="nav-link active" data-scroll-target="#building-an-r2">Building an <span class="math inline">\(R^2\)</span></a>
+  <ul class="collapse">
+  <li><a href="#variance-observing-a-single-variable-and-its-distance-from-average" id="toc-variance-observing-a-single-variable-and-its-distance-from-average" class="nav-link" data-scroll-target="#variance-observing-a-single-variable-and-its-distance-from-average">Variance: Observing a Single Variable and its Distance From Average</a>
+  <ul class="collapse">
+  <li><a href="#ssto-the-total-sum-of-squares" id="toc-ssto-the-total-sum-of-squares" class="nav-link" data-scroll-target="#ssto-the-total-sum-of-squares">SSTO: the Total Sum of Squares</a></li>
+  </ul></li>
+  <li><a href="#regression-explaining-a-variable-with-another-variable" id="toc-regression-explaining-a-variable-with-another-variable" class="nav-link" data-scroll-target="#regression-explaining-a-variable-with-another-variable">Regression: Explaining a Variable With Another Variable</a>
+  <ul class="collapse">
+  <li><a href="#residuals" id="toc-residuals" class="nav-link" data-scroll-target="#residuals">Residuals</a></li>
+  <li><a href="#sse-the-sum-of-squared-errors" id="toc-sse-the-sum-of-squared-errors" class="nav-link" data-scroll-target="#sse-the-sum-of-squared-errors">SSE: the Sum of Squared Errors</a></li>
+  </ul></li>
+  <li><a href="#coefficient-of-determination-assessing-the-regression-lines-fit" id="toc-coefficient-of-determination-assessing-the-regression-lines-fit" class="nav-link" data-scroll-target="#coefficient-of-determination-assessing-the-regression-lines-fit">Coefficient of Determination: Assessing the Regression Line’s fit</a>
+  <ul class="collapse">
+  <li><a href="#ssr-the-sum-of-squares-regression" id="toc-ssr-the-sum-of-squares-regression" class="nav-link" data-scroll-target="#ssr-the-sum-of-squares-regression">SSR: The Sum of Squares Regression</a></li>
+  <li><a href="#measures-of-distances-and-their-names" id="toc-measures-of-distances-and-their-names" class="nav-link" data-scroll-target="#measures-of-distances-and-their-names">Measures of Distances And Their Names</a></li>
+  <li><a href="#calculating-the-coefficient-of-determination" id="toc-calculating-the-coefficient-of-determination" class="nav-link" data-scroll-target="#calculating-the-coefficient-of-determination">Calculating the Coefficient of Determination</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="simple-linear-regression" class="level1">
-<h1>Simple Linear Regression</h1>
-<section id="true-y-observed-y-and-estimated-y" class="level2">
-<h2 class="anchored" data-anchor-id="true-y-observed-y-and-estimated-y"><strong>True</strong> <span class="math inline">\(Y\)</span><strong>, Observed</strong> <span class="math inline">\(Y\)</span><strong>, and Estimated</strong> <span class="math inline">\(Y\)</span></h2>
-<p>Simple linear regression means that there is only a single variable (not multiple <span class="math inline">\(X\)</span>’s)</p>
+<section id="building-an-r2" class="level1">
+<h1>Building an <span class="math inline">\(R^2\)</span></h1>
+<section id="variance-observing-a-single-variable-and-its-distance-from-average" class="level2">
+<h2 class="anchored" data-anchor-id="variance-observing-a-single-variable-and-its-distance-from-average">Variance: Observing a Single Variable and its Distance From Average</h2>
+<p>Each dot in the graph below is a day- the horizontal location of each dot is determined by the temperature of that day. The dotted red line shows where a point would be if it were the average temperature. Notice how all the points vary, at least a little bit, from the mean. All data tends to vary from the mean.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"rexburg_X.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>mean_tempmax2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(df<span class="sc">$</span>tempmax2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> tempmax2)) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>() <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> mean_tempmax2), </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> .<span class="dv">75</span>) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> mean_tempmax2, </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> .<span class="dv">5</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Mean"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="dv">2</span>, </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.41</span>, </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"red"</span>, </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Number of days with this temperature                                                            "</span>) <span class="sc">+</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Temperature"</span>) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">85</span>)) <span class="sc">+</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can measure how far a point is from the mean. The calculation is simple: <span class="math inline">\(\text{Temperature of a given day} - \text{Temperature average} = \text{How much the given day is different from the average}\)</span> or more elegantly, <span class="math inline">\(x_i - \mu\)</span> For example, if the temperature for a given day is 46 degrees, and the average temperature was 43, how much this day varies from the average is 3 degrees. <span class="math inline">\(46 - 43 = 3\)</span></p>
+<p><strong>Why we square things</strong></p>
+<ol type="1">
+<li><p>Imagine we have 3 days to analyze, <span class="math inline">\(\text{day 1: }(41),\;\;\; \text{day 2: } (42),\;\;\; \text{day 3: }(46)\)</span>.</p></li>
+<li><p>The average of these days is 43 <span class="math inline">\(\frac{(41 + 42 + 46)}{3}=43\)</span>.</p></li>
+<li><p>The distances from the average are <span class="math inline">\(\text{day 1: }(-2),\;\;\; \text{day 2: } (-1),\;\;\; \text{day 3: }(3)\)</span>.</p></li>
+<li><p>In order to find the average distance, we need to add the distances and divide it by 3 (the number of observations) <span class="math inline">\(\frac{(-2 -1+3)}{3} = 0\)</span>. The average distance from the average is 0…</p></li>
+<li><p>The negative numbers are causing a problem! Fortunately, we have a cool trick to get rid of negatives: the <em>square</em>.</p></li>
+<li><p>Imagine we square the distances before adding them: <span class="math inline">\(\frac{(-2)^2 + (-1)^2 + (3)^2}{3} = \frac{14}{3} = 4\frac{2}{3}\)</span>. (Note, the sum of the squared differences from the mean is called the SSTO, or Total Sum of Squares)</p></li>
+<li><p>Cool! <span class="math inline">\(4\frac{2}{3}\)</span> is the average squared distance from the mean.</p></li>
+<li><p>This average squared distance from the mean is called the <em>variance</em>.</p></li>
+<li><p>(Also, another reason we square things is because it makes calculus easier)</p></li>
+</ol>
+<p><span class="math display">\[
+\text{Variance} = \frac{\sum_{i=1}^n (x_i - \mu)^2}{n} = \frac{\text{SSTO}}{n}
+\]</span></p>
+<p><img src="lines1.png" class="img-fluid"></p>
+<section id="ssto-the-total-sum-of-squares" class="level3">
+<h3 class="anchored" data-anchor-id="ssto-the-total-sum-of-squares">SSTO: the Total Sum of Squares</h3>
+<p>From the information above including the equation, we can learn that the <span class="math inline">\(\text{SSTO}\)</span> is the number obtained after the squared distances from the average are obtained. When we divide the <span class="math inline">\(\text{SSTO}\)</span> by the number of observations, we get the variance (averaged squared distance from the mean)</p>
+</section>
+</section>
+<section id="regression-explaining-a-variable-with-another-variable" class="level2">
+<h2 class="anchored" data-anchor-id="regression-explaining-a-variable-with-another-variable">Regression: Explaining a Variable With Another Variable</h2>
+<p>Above, we were only dealing with a single variable. For everything below, we are adding another variable.</p>
+<p>Simple linear regression is a statistical method used to model the relationship between a single independent variable (explanatory) and a single dependent variable (response). The goal is to find the best-fitting straight line that represents the relationship between the two variables, allowing us to make predictions and understand the underlying trends in the data. In this simple model, we only model a single explanatory variable (not multiple <span class="math inline">\(X\)</span>’s)</p>
 <ul>
 <li><p><span class="math inline">\(X\)</span> - A single quantitative explanatory variable (independent)</p></li>
 <li><p><span class="math inline">\(Y\)</span> - A single quantitative response variable (dependent)</p></li>
 </ul>
+<p><strong>A line with points</strong></p>
+<p>With points on a graph, we can see if they make a line.</p>
+<ul>
+<li><p><strong>The True Line</strong>: This is usually an unknown association that we try to estimate</p></li>
+<li><p><strong>Observed Points</strong>: While this is not a line, this represents the actual observed points</p></li>
+<li><p><strong>The Regression Line</strong>: This is our estimate of the True Line</p></li>
+</ul>
+<p><strong>True, Observed, and Estimated</strong> <span class="math inline">\(Y\)</span></p>
 <p>The <strong>True Regression Line</strong></p>
 <p><span class="math display">\[
 E\{Y\} = \beta_0 + \beta_1 X_i
 \]</span></p>
-<ul>
-<li><p><span class="math inline">\(E\{Y\}\)</span> - True mean y-value, also <span class="math inline">\(\mu_{Y|X}\)</span> or <span class="math inline">\(E\{Y|X\}\)</span></p></li>
-<li><p><span class="math inline">\(\beta_0\)</span> - True <span class="math inline">\(y\)</span>-intercept</p></li>
-<li><p><span class="math inline">\(\beta_1\)</span> - True slope</p></li>
-</ul>
 <p>The <strong>Observed Points</strong></p>
 <p><span class="math display">\[
-Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i = b_0 + b_1X_i + r_i
+Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
+\]</span> or</p>
+<p><span class="math display">\[
+Y_i = b_0 + b_1X_i + r_i
 \]</span></p>
-<ul>
-<li><p><span class="math inline">\(Y_i\)</span> - Response or dependent variable for the <span class="math inline">\(i^{\text{th}}\)</span> observation.</p></li>
-<li><p><span class="math inline">\(\epsilon_i\)</span> - Error, distance of dot to true line. <span class="math inline">\(\epsilon_i = Y_i - E\{Y\}\)</span></p></li>
-<li><p><span class="math inline">\(r_i\)</span> - Residual, distance of dot to estimated line. <span class="math inline">\(r_i = Y_i - \hat{Y}_i\)</span></p></li>
-</ul>
 <p>The <strong>Estimated Regression Line</strong> obtained from a regression analysis from the observed points</p>
 <p><span class="math display">\[
 \hat{Y}_i = b_0 + b_1 X_i
 \]</span></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Terminology
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
+<li><p><span class="math inline">\(E\{Y\}\)</span> - True mean y-value, also <span class="math inline">\(\mu_{Y|X}\)</span> or <span class="math inline">\(E\{Y|X\}\)</span></p></li>
+<li><p><span class="math inline">\(\beta_0\)</span> - True <span class="math inline">\(y\)</span>-intercept</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> - True slope</p></li>
+<li><p><span class="math inline">\(Y_i\)</span> - Response or dependent variable for the <span class="math inline">\(i^{\text{th}}\)</span> observation.</p></li>
+<li><p><span class="math inline">\(\epsilon_i\)</span> - Error, distance of dot to true line. <span class="math inline">\(\epsilon_i = Y_i - E\{Y\}\)</span></p></li>
+<li><p><span class="math inline">\(r_i\)</span> - Residual, distance of dot to estimated line. <span class="math inline">\(r_i = Y_i - \hat{Y}_i\)</span></p></li>
 <li><p><span class="math inline">\(\hat{Y}_i\)</span> - The fitted line</p></li>
 <li><p><span class="math inline">\(b_0\)</span> - Estimated <span class="math inline">\(y\)</span>-intercept, also <span class="math inline">\(\hat{\beta}_0\)</span></p></li>
 <li><p><span class="math inline">\(b_1\)</span> - Estimated slope, also <span class="math inline">\(\hat{\beta}_1\)</span></p></li>
 </ul>
+</div>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -258,52 +377,49 @@ R code for calling your data
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>wt, <span class="at">y=</span>mpg)) <span class="sc">+</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">'skyblue4'</span>, <span class="at">fill =</span> <span class="st">'skyblue'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Miles per Gallon vs. Weight of Car"</span>, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Weight of Car"</span>, </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>wt, <span class="at">y=</span>mpg)) <span class="sc">+</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">'skyblue4'</span>, <span class="at">fill =</span> <span class="st">'skyblue'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Miles per Gallon vs. Weight of Car"</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Weight of Car"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>wt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co">#random number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>wt</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co">#random number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X[i]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X[i]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.32</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Y[i]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Y[i]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 22.8</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>wt, <span class="at">y=</span>mpg)) <span class="sc">+</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">'skyblue4'</span>, <span class="at">fill =</span> <span class="st">'skyblue'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Miles per Gallon vs. Weight of Car"</span>, </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Weight of Car"</span>, <span class="at">y=</span><span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> wt[i] ), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mpg[i]), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>wt, <span class="at">y=</span>mpg)) <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">'skyblue4'</span>, <span class="at">fill =</span> <span class="st">'skyblue'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Miles per Gallon vs. Weight of Car"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Weight of Car"</span>, <span class="at">y=</span><span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> wt[i] ), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mpg[i]), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -311,35 +427,17 @@ R code for calling your data
 </div>
 </div>
 </div>
-</section>
-<section id="residuals-and-the-sum-of-squared-errors" class="level2">
-<h2 class="anchored" data-anchor-id="residuals-and-the-sum-of-squared-errors">Residuals and the Sum of Squared Errors</h2>
-<p>The estimated regression line or line of best fit from the observed points is represented by the equation <span class="math inline">\(\hat{Y}_i=b_0+b_1X_i\)</span> , where <span class="math inline">\(b_1\)</span> is the estimated slope of the line and <span class="math inline">\(b_0\)</span> is the estimated y-intercept.</p>
-<section id="minimizing-residuals" class="level3">
-<h3 class="anchored" data-anchor-id="minimizing-residuals">Minimizing Residuals</h3>
-<p>A single residual, <span class="math inline">\(r_i\)</span>, is the distance between an observed point and the estimated regression line. Given any line, we can calculate how different our predicted value, <span class="math inline">\(\hat{Y_i}\)</span> is from our actual data point, <span class="math inline">\(Y_i\)</span>. This vertical distance from the real y output and the predicted y output is called the residual. The formula for any given residual is represented as such</p>
-<p><span class="math display">\[
-\begin{align*}
-r_i &amp;= Y_i-\hat{Y}_i\\
-r_i &amp;= Y_i - (b_0+b_1X_i)
-\end{align*}
-\]</span></p>
-<p>The goal of simple linear regression is to minimize the sum of the squared errors (<span class="math inline">\(\text{SSE}\)</span>). This is represented by the equations:</p>
-<p><span class="math display">\[
-\begin{align*}
-\text{SSE} &amp;= \sum_{i=1}^n \left(r_i\right)^2 \\
-\text{SSE} &amp;= \sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2\\
-\text{SSE} &amp;= \sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
-\end{align*}
-\]</span></p>
-<p>The closer any given line is to the best fit line, the lower the <span class="math inline">\(\text{SSE}\)</span> will be. In fact, the best fit line represents the line with the lowest possible <span class="math inline">\(\text{SSE}\)</span>. This line is found by manipulating the values for <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> since the <span class="math inline">\(X\)</span> values must stay the same.</p>
-</section>
-</section>
-<section id="calculating-the-estimated-regression-line" class="level2">
-<h2 class="anchored" data-anchor-id="calculating-the-estimated-regression-line">Calculating the Estimated Regression Line</h2>
+<p><strong>Estimations</strong></p>
+<ul>
+<li><span class="math inline">\(\hat{Y}\)</span> estimates <span class="math inline">\(E\{Y\}\)</span></li>
+<li><span class="math inline">\(b_0\)</span> estimates <span class="math inline">\(\beta_0\)</span></li>
+<li><span class="math inline">\(b_1\)</span> estimates <span class="math inline">\(\beta_1\)</span></li>
+<li><span class="math inline">\(r_i\)</span> estimates <span class="math inline">\(\epsilon_i\)</span></li>
+</ul>
+<p><strong>Calculating the Estimated Regression Line</strong></p>
 <p>There are multiple ways to calculate the estimated regression line like with calculus or linear algebra.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -348,7 +446,7 @@ The Calculus Behind Best Fit
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <section id="the-calculus-behind-best-fit-1" class="level1 callout-body-container callout-body">
 <h1>The Calculus Behind Best Fit</h1>
 <p>There exists a combination of <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> that is the lowest. Geometrically, we can imagine a shape in three dimensions where two inputs (<span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>) produce an output (<span class="math inline">\(\text{SSE}\)</span>). Roughly speaking, where the three dimensional slope is equal to 0 is where the combination of <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> will produce the lowest possible <span class="math inline">\(\text{SSE}\)</span>. Since the derivative of an equation can tell us the slope at any given point, we can set both equations’ derivatives to zero to find where slope is zero for both equations.</p>
@@ -416,7 +514,7 @@ The Calculus Behind Best Fit
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -425,7 +523,7 @@ Least Squares in Linear Algebra
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <section id="least-squares-in-linear-algebra-1" class="level1 callout-body-container callout-body">
 <h1>Least Squares in Linear Algebra</h1>
 <p><strong>Step One: Organize the data into vectors</strong> Let’s assume you have <span class="math inline">\(n\)</span> observations of the independent variable <span class="math inline">\(\mathbf{X}\)</span> and dependent variable <span class="math inline">\(\mathbf{Y}\)</span>. Organize the data into two vectors:</p>
@@ -472,7 +570,7 @@ Least Squares in Linear Algebra
 </ul>
 <p>(<span class="math inline">\(\bar{Y}\)</span> represents the mean of the <span class="math inline">\(Y\)</span> values and <span class="math inline">\(\bar{X}\)</span> represents the mean of the <span class="math inline">\(X\)</span> values)</p>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -481,11 +579,11 @@ R code for calculating the coefficients for the estimated regression line
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">summary</span>(mylm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(tempmax2 <span class="sc">~</span> X, <span class="at">data =</span> df)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">summary</span>(mylm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <colgroup>
@@ -507,22 +605,22 @@ R code for calculating the coefficients for the estimated regression line
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><strong>(Intercept)</strong></td>
-<td style="text-align: center;">37.29</td>
-<td style="text-align: center;">1.878</td>
-<td style="text-align: center;">19.86</td>
-<td style="text-align: center;">8.242e-19</td>
+<td style="text-align: center;">8.817</td>
+<td style="text-align: center;">7.341</td>
+<td style="text-align: center;">1.201</td>
+<td style="text-align: center;">0.2398</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><strong>wt</strong></td>
-<td style="text-align: center;">-5.344</td>
-<td style="text-align: center;">0.5591</td>
-<td style="text-align: center;">-9.559</td>
-<td style="text-align: center;">1.294e-10</td>
+<td style="text-align: center;"><strong>X</strong></td>
+<td style="text-align: center;">0.7408</td>
+<td style="text-align: center;">0.1527</td>
+<td style="text-align: center;">4.852</td>
+<td style="text-align: center;">4.161e-05</td>
 </tr>
 </tbody>
 </table>
 <table class="table table-sm table-striped">
-<caption>Fitting linear model: mpg ~ wt</caption>
+<caption>Fitting linear model: tempmax2 ~ X</caption>
 <colgroup>
 <col style="width: 20%">
 <col style="width: 30%">
@@ -539,41 +637,41 @@ R code for calculating the coefficients for the estimated regression line
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">32</td>
-<td style="text-align: center;">3.046</td>
-<td style="text-align: center;">0.7528</td>
-<td style="text-align: center;">0.7446</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">7.18</td>
+<td style="text-align: center;">0.4567</td>
+<td style="text-align: center;">0.4373</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>b_0 <span class="ot">&lt;-</span> mylm<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>b_1 <span class="ot">&lt;-</span> mylm<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>b_0 <span class="ot">&lt;-</span> mylm<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>b_1 <span class="ot">&lt;-</span> mylm<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>b_0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>b_0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
-   37.28513 </code></pre>
+   8.817363 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>b_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>b_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       wt 
--5.344472 </code></pre>
+<pre><code>        X 
+0.7408133 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">'skyblue4'</span>, <span class="at">fill =</span> <span class="st">'skyblue'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) b_0 <span class="sc">+</span> b_1 <span class="sc">*</span> x) <span class="sc">+</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Miles per Gallon vs. Weight of Car"</span>, </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">x=</span><span class="st">"Weight of Car"</span>, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">y=</span><span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_classic</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> tempmax2)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">'skyblue4'</span>, <span class="at">fill =</span> <span class="st">'skyblue'</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) b_0 <span class="sc">+</span> b_1 <span class="sc">*</span> x) <span class="sc">+</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Temperature by X"</span>, </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">x=</span><span class="st">"X"</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">y=</span><span class="st">"Temperature"</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_classic</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -581,9 +679,243 @@ R code for calculating the coefficients for the estimated regression line
 </div>
 </div>
 </div>
+<p><strong>A challenger approaches!</strong></p>
+<p>Below, we have charted both variables to try and see if some of the variance of <span class="math inline">\(Y\)</span> is explained by <span class="math inline">\(X\)</span>. The blue line represents the estimated regression line.</p>
+<p>The goal of the blue line below is to show the association between the <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> variable. The slope can tell us how much our Y value changes by a change in our <span class="math inline">\(X\)</span> value. (Note below, that for every <span class="math inline">\(1\)</span> increase in our <span class="math inline">\(X\)</span>, theres a roughly <span class="math inline">\(.74\)</span> increase in the <span class="math inline">\(Y\)</span>.)</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"rexburg_X.csv"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> tempmax2)) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">'blue'</span>) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Complex X by Max Temperature in 2 days"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Complex X"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Max Temperature in two days"</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="residuals" class="level3">
+<h3 class="anchored" data-anchor-id="residuals">Residuals</h3>
+<p>As you can see from the plot, the points do not lie exactly on the estimated regression line. For any given point, there is a distance between the point and the regression line. This distance is called the residual.</p>
+<p>The formula to calculate any given residual is below:</p>
+<p><span class="math display">\[
+\begin{align*}
+r_i &amp;= \left(Y_i - \hat{Y_i}\right)^2\\
+r_i &amp;= \left(Y_i - (b_0+b_1X_i)\right)^2
+\end{align*}
+\]</span></p>
 </section>
-<section id="assumption-for-simple-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="assumption-for-simple-linear-regression">Assumption for Simple Linear Regression</h2>
+<section id="sse-the-sum-of-squared-errors" class="level3">
+<h3 class="anchored" data-anchor-id="sse-the-sum-of-squared-errors">SSE: the Sum of Squared Errors</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(tempmax2 <span class="sc">~</span> X, <span class="at">data =</span> df)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(model)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> tempmax2)) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">'blue'</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Complex X by Max Temperature in 2 days (With residuals)"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Complex X"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Max Temperature in two days"</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">xend =</span> X, <span class="at">y =</span> tempmax2, <span class="at">yend =</span> tempmax2 <span class="sc">-</span> residuals), <span class="at">color =</span> <span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In the graph above, we can see the vertical distance between the actual points and the predicted line. Some points have a very large red line which means that the model may not explain that specific point very well. Conversely, the points with a small red line seem to be explained by the model very well.</p>
+<p>To make sure the residuals (distances from the regression line) are positive, we will square them. We can add them all up to get a sum. Below is the formula to get the sum of the squared residuals</p>
+<p><span class="math display">\[
+\begin{align*}
+\text{SSE} &amp;= \sum_{i=1}^n \left(r_i\right)^2 \\
+\text{SSE} &amp;= \sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2\\
+\text{SSE} &amp;= \sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
+\end{align*}
+\]</span></p>
+<p>(Note: SSE is used because E stands for error, the statistic that residuals try to approximate)</p>
+<p>(Note: The estimated regression line or line of best fit from the observed points is represented by the equation <span class="math inline">\(\hat{Y}_i=b_0+b_1X_i\)</span> , where <span class="math inline">\(b_1\)</span> is the estimated slope of the line and <span class="math inline">\(b_0\)</span> is the estimated y-intercept.)</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Minimizing Residuals
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A single residual, <span class="math inline">\(r_i\)</span>, is the distance between an observed point and the estimated regression line. Given any line, we can calculate how different our predicted value, <span class="math inline">\(\hat{Y_i}\)</span> is from our actual data point, <span class="math inline">\(Y_i\)</span>. This vertical distance from the real y output and the predicted y output is called the residual. The formula for any given residual is represented as such</p>
+<p><span class="math display">\[
+\begin{align*}
+r_i &amp;= Y_i-\hat{Y}_i\\
+r_i &amp;= Y_i - (b_0+b_1X_i)
+\end{align*}
+\]</span></p>
+<p>The goal of simple linear regression is to minimize the sum of the squared errors (<span class="math inline">\(\text{SSE}\)</span>). This is represented by the equations:</p>
+<p><span class="math display">\[
+\begin{align*}
+\text{SSE} &amp;= \sum_{i=1}^n \left(r_i\right)^2 \\
+\text{SSE} &amp;= \sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2\\
+\text{SSE} &amp;= \sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2
+\end{align*}
+\]</span></p>
+<p>The closer any given line is to the best fit line, the lower the <span class="math inline">\(\text{SSE}\)</span> will be. In fact, the best fit line represents the line with the lowest possible <span class="math inline">\(\text{SSE}\)</span>. This line is found by manipulating the values for <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span> since the <span class="math inline">\(X\)</span> values must stay the same.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="coefficient-of-determination-assessing-the-regression-lines-fit" class="level2">
+<h2 class="anchored" data-anchor-id="coefficient-of-determination-assessing-the-regression-lines-fit">Coefficient of Determination: Assessing the Regression Line’s fit</h2>
+<section id="ssr-the-sum-of-squares-regression" class="level3">
+<h3 class="anchored" data-anchor-id="ssr-the-sum-of-squares-regression">SSR: The Sum of Squares Regression</h3>
+<p>The point of regression is to try to find an association between two variables. If a line explains some of the association between two variables, we should be able to “count” how much association it explains.\</p>
+<p>SSR essentially measures the extent to which the regression line captures the relationship between the X and Y. A higher SSR value indicates that the regression line is better at explaining the observed variation in the data. Conversely, a lower SSR value suggests that the regression line may not be a good fit for the data.</p>
+<p>The SSR formula is as so:</p>
+<p><span class="math display">\[
+\text{SSR} = \sum_{i=1}^{n} (\hat{Y}_{i} - \bar{Y})^2
+\]</span></p>
+</section>
+<section id="measures-of-distances-and-their-names" class="level3">
+<h3 class="anchored" data-anchor-id="measures-of-distances-and-their-names">Measures of Distances And Their Names</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(tempmax2<span class="sc">~</span>X, <span class="at">data=</span>df)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">select</span>(X) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">X=</span><span class="dv">28</span>,<span class="at">tempmax2=</span>mean_tempmax2,<span class="at">type=</span><span class="st">'0, empty'</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">select</span>(tempmax2) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">X=</span><span class="dv">28</span>,<span class="at">type=</span><span class="st">'1, ssto'</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">select</span>(tempmax2, X) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">type=</span><span class="st">'2, sse'</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">select</span>(X) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">tempmax2 =</span> <span class="fu">predict</span>(mylm, <span class="fu">data.frame</span>(<span class="at">X =</span> X)),<span class="at">type=</span><span class="st">'3, ssr'</span>),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">select</span>(X) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">tempmax2 =</span> mean_tempmax2, <span class="at">type=</span><span class="st">'4, mean'</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>)<span class="sc">%&gt;%</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(X, tempmax2)) <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">frame =</span> type), <span class="at">color=</span><span class="st">'blue'</span>)<span class="sc">+</span><span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> mean_tempmax2), </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> .<span class="dv">75</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(df1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b29e8ae993412388dd9e" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b29e8ae993412388dd9e">{"x":{"data":[{"x":[28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28],"y":[43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86],"text":"X: 28.00000<br />tempmax2: 43.86000<br />type: 0, empty","frame":"0, empty","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,255,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","visible":true},{"x":[26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,26.208451,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529,65.622529],"y":[43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86],"text":"mean_tempmax2: 43.86","type":"scatter","mode":"lines","line":{"width":2.83464566929134,"color":"rgba(255,0,0,1)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[26.208451,65.622529],"tickmode":"array","ticktext":["30","40","50","60"],"tickvals":[30,40,50,60],"categoryorder":"array","categoryarray":["30","40","50","60"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"X","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[24.11,67.89],"tickmode":"array","ticktext":["30","40","50","60"],"tickvals":[30,40,50,60],"categoryorder":"array","categoryarray":["30","40","50","60"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"tempmax2","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative","sliders":[{"currentvalue":{"prefix":"~type: ","xanchor":"right","font":{"size":16,"color":"rgba(204,204,204,1)"}},"steps":[{"method":"animate","args":[["0, empty"],{"transition":{"duration":500,"easing":"linear"},"frame":{"duration":500,"redraw":false},"mode":"immediate"}],"label":"0, empty","value":"0, empty"},{"method":"animate","args":[["1, ssto"],{"transition":{"duration":500,"easing":"linear"},"frame":{"duration":500,"redraw":false},"mode":"immediate"}],"label":"1, ssto","value":"1, ssto"},{"method":"animate","args":[["2, sse"],{"transition":{"duration":500,"easing":"linear"},"frame":{"duration":500,"redraw":false},"mode":"immediate"}],"label":"2, sse","value":"2, sse"},{"method":"animate","args":[["3, ssr"],{"transition":{"duration":500,"easing":"linear"},"frame":{"duration":500,"redraw":false},"mode":"immediate"}],"label":"3, ssr","value":"3, ssr"},{"method":"animate","args":[["4, mean"],{"transition":{"duration":500,"easing":"linear"},"frame":{"duration":500,"redraw":false},"mode":"immediate"}],"label":"4, mean","value":"4, mean"}],"visible":true,"pad":{"t":40}}],"updatemenus":[{"type":"buttons","direction":"right","showactive":false,"y":0,"x":0,"yanchor":"top","xanchor":"right","pad":{"t":60,"r":5},"buttons":[{"label":"Play","method":"animate","args":[null,{"fromcurrent":true,"mode":"immediate","transition":{"duration":500,"easing":"linear"},"frame":{"duration":500,"redraw":false}}]}]}]},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"b943e8b3eab":{"x":{},"y":{},"frame":{},"type":"scatter"},"b9424fa332c":{"yintercept":{}}},"cur_data":"b943e8b3eab","visdat":{"b943e8b3eab":["function (y) ","x"],"b9424fa332c":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"frames":[{"name":"0, empty","data":[{"x":[28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28],"y":[43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86],"text":"X: 28.00000<br />tempmax2: 43.86000<br />type: 0, empty","frame":"0, empty","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,255,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","visible":true}],"traces":[0]},{"name":"1, ssto","data":[{"x":[28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28],"y":[26.1,29,38,47,35.1,37.1,38.9,35.1,35.1,37.1,34.1,38.9,43.1,48.8,51.1,56,65.9,57.8,47,37.1,47,60.2,60.2,46.1,39.8,39.8,42.2,43.1,49.9,49.2],"text":["X: 28.00000<br />tempmax2: 26.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 29.00000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 38.00000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 47.00000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 35.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 37.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 38.90000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 35.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 35.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 37.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 34.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 38.90000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 43.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 48.80000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 51.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 56.00000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 65.90000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 57.80000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 47.00000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 37.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 47.00000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 60.20000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 60.20000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 46.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 39.80000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 39.80000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 42.20000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 43.10000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 49.90000<br />type: 1, ssto","X: 28.00000<br />tempmax2: 49.20000<br />type: 1, ssto"],"frame":"1, ssto","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,255,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","visible":true}],"traces":[0]},{"name":"2, sse","data":[{"x":[31.862225,31.6340459999999,39.0407989999998,46.2108749999999,45.5306799999999,48.9277789999999,41.5084669999998,40.4768809999999,40.97666,39.4075899999998,37.8812599999998,41.60363,41.6610099999999,50.2232899999999,51.9877899999999,59.03379,63.83098,59.7455199999998,59.0217,54.75444,39.3675309999998,41.3547069999998,51.1492799999998,57.3127399999999,56.13935,39.1231399999997,45.7813399999999,53.4779769999999,52.8763399999999,57.1859600000001],"y":[26.1,29,38,47,35.1,37.1,38.9,35.1,35.1,37.1,34.1,38.9,43.1,48.8,51.1,56,65.9,57.8,47,37.1,47,60.2,60.2,46.1,39.8,39.8,42.2,43.1,49.9,49.2],"text":["X: 31.86222<br />tempmax2: 26.10000<br />type: 2, sse","X: 31.63405<br />tempmax2: 29.00000<br />type: 2, sse","X: 39.04080<br />tempmax2: 38.00000<br />type: 2, sse","X: 46.21087<br />tempmax2: 47.00000<br />type: 2, sse","X: 45.53068<br />tempmax2: 35.10000<br />type: 2, sse","X: 48.92778<br />tempmax2: 37.10000<br />type: 2, sse","X: 41.50847<br />tempmax2: 38.90000<br />type: 2, sse","X: 40.47688<br />tempmax2: 35.10000<br />type: 2, sse","X: 40.97666<br />tempmax2: 35.10000<br />type: 2, sse","X: 39.40759<br />tempmax2: 37.10000<br />type: 2, sse","X: 37.88126<br />tempmax2: 34.10000<br />type: 2, sse","X: 41.60363<br />tempmax2: 38.90000<br />type: 2, sse","X: 41.66101<br />tempmax2: 43.10000<br />type: 2, sse","X: 50.22329<br />tempmax2: 48.80000<br />type: 2, sse","X: 51.98779<br />tempmax2: 51.10000<br />type: 2, sse","X: 59.03379<br />tempmax2: 56.00000<br />type: 2, sse","X: 63.83098<br />tempmax2: 65.90000<br />type: 2, sse","X: 59.74552<br />tempmax2: 57.80000<br />type: 2, sse","X: 59.02170<br />tempmax2: 47.00000<br />type: 2, sse","X: 54.75444<br />tempmax2: 37.10000<br />type: 2, sse","X: 39.36753<br />tempmax2: 47.00000<br />type: 2, sse","X: 41.35471<br />tempmax2: 60.20000<br />type: 2, sse","X: 51.14928<br />tempmax2: 60.20000<br />type: 2, sse","X: 57.31274<br />tempmax2: 46.10000<br />type: 2, sse","X: 56.13935<br />tempmax2: 39.80000<br />type: 2, sse","X: 39.12314<br />tempmax2: 39.80000<br />type: 2, sse","X: 45.78134<br />tempmax2: 42.20000<br />type: 2, sse","X: 53.47798<br />tempmax2: 43.10000<br />type: 2, sse","X: 52.87634<br />tempmax2: 49.90000<br />type: 2, sse","X: 57.18596<br />tempmax2: 49.20000<br />type: 2, sse"],"frame":"2, sse","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,255,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","visible":true}],"traces":[0]},{"name":"3, ssr","data":[{"x":[31.862225,31.6340459999999,39.0407989999998,46.2108749999999,45.5306799999999,48.9277789999999,41.5084669999998,40.4768809999999,40.97666,39.4075899999998,37.8812599999998,41.60363,41.6610099999999,50.2232899999999,51.9877899999999,59.03379,63.83098,59.7455199999998,59.0217,54.75444,39.3675309999998,41.3547069999998,51.1492799999998,57.3127399999999,56.13935,39.1231399999997,45.7813399999999,53.4779769999999,52.8763399999999,57.1859600000001],"y":[32.4213234513169,32.2522854139177,37.7393065272526,43.0509941717867,42.547096670927,45.0637127828844,39.5673877953468,38.8031751690826,39.1734180980694,38.0110301774379,36.8803046171396,39.6378858111722,39.6803936781799,46.0234445586784,47.3306096220307,52.5503801158703,56.1042022582691,53.0776391640649,52.5414236831041,49.3801807314234,37.9813539375553,39.4534803427307,46.709430263985,51.2754033902922,50.4061404751963,37.8003058349779,42.7327889320661,48.4345599673192,47.9888592774807,51.1814830804415],"text":["X: 31.86222<br />tempmax2: 32.42132<br />type: 3, ssr","X: 31.63405<br />tempmax2: 32.25229<br />type: 3, ssr","X: 39.04080<br />tempmax2: 37.73931<br />type: 3, ssr","X: 46.21087<br />tempmax2: 43.05099<br />type: 3, ssr","X: 45.53068<br />tempmax2: 42.54710<br />type: 3, ssr","X: 48.92778<br />tempmax2: 45.06371<br />type: 3, ssr","X: 41.50847<br />tempmax2: 39.56739<br />type: 3, ssr","X: 40.47688<br />tempmax2: 38.80318<br />type: 3, ssr","X: 40.97666<br />tempmax2: 39.17342<br />type: 3, ssr","X: 39.40759<br />tempmax2: 38.01103<br />type: 3, ssr","X: 37.88126<br />tempmax2: 36.88030<br />type: 3, ssr","X: 41.60363<br />tempmax2: 39.63789<br />type: 3, ssr","X: 41.66101<br />tempmax2: 39.68039<br />type: 3, ssr","X: 50.22329<br />tempmax2: 46.02344<br />type: 3, ssr","X: 51.98779<br />tempmax2: 47.33061<br />type: 3, ssr","X: 59.03379<br />tempmax2: 52.55038<br />type: 3, ssr","X: 63.83098<br />tempmax2: 56.10420<br />type: 3, ssr","X: 59.74552<br />tempmax2: 53.07764<br />type: 3, ssr","X: 59.02170<br />tempmax2: 52.54142<br />type: 3, ssr","X: 54.75444<br />tempmax2: 49.38018<br />type: 3, ssr","X: 39.36753<br />tempmax2: 37.98135<br />type: 3, ssr","X: 41.35471<br />tempmax2: 39.45348<br />type: 3, ssr","X: 51.14928<br />tempmax2: 46.70943<br />type: 3, ssr","X: 57.31274<br />tempmax2: 51.27540<br />type: 3, ssr","X: 56.13935<br />tempmax2: 50.40614<br />type: 3, ssr","X: 39.12314<br />tempmax2: 37.80031<br />type: 3, ssr","X: 45.78134<br />tempmax2: 42.73279<br />type: 3, ssr","X: 53.47798<br />tempmax2: 48.43456<br />type: 3, ssr","X: 52.87634<br />tempmax2: 47.98886<br />type: 3, ssr","X: 57.18596<br />tempmax2: 51.18148<br />type: 3, ssr"],"frame":"3, ssr","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,255,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","visible":true}],"traces":[0]},{"name":"4, mean","data":[{"x":[31.862225,31.6340459999999,39.0407989999998,46.2108749999999,45.5306799999999,48.9277789999999,41.5084669999998,40.4768809999999,40.97666,39.4075899999998,37.8812599999998,41.60363,41.6610099999999,50.2232899999999,51.9877899999999,59.03379,63.83098,59.7455199999998,59.0217,54.75444,39.3675309999998,41.3547069999998,51.1492799999998,57.3127399999999,56.13935,39.1231399999997,45.7813399999999,53.4779769999999,52.8763399999999,57.1859600000001],"y":[43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86,43.86],"text":["X: 31.86222<br />tempmax2: 43.86000<br />type: 4, mean","X: 31.63405<br />tempmax2: 43.86000<br />type: 4, mean","X: 39.04080<br />tempmax2: 43.86000<br />type: 4, mean","X: 46.21087<br />tempmax2: 43.86000<br />type: 4, mean","X: 45.53068<br />tempmax2: 43.86000<br />type: 4, mean","X: 48.92778<br />tempmax2: 43.86000<br />type: 4, mean","X: 41.50847<br />tempmax2: 43.86000<br />type: 4, mean","X: 40.47688<br />tempmax2: 43.86000<br />type: 4, mean","X: 40.97666<br />tempmax2: 43.86000<br />type: 4, mean","X: 39.40759<br />tempmax2: 43.86000<br />type: 4, mean","X: 37.88126<br />tempmax2: 43.86000<br />type: 4, mean","X: 41.60363<br />tempmax2: 43.86000<br />type: 4, mean","X: 41.66101<br />tempmax2: 43.86000<br />type: 4, mean","X: 50.22329<br />tempmax2: 43.86000<br />type: 4, mean","X: 51.98779<br />tempmax2: 43.86000<br />type: 4, mean","X: 59.03379<br />tempmax2: 43.86000<br />type: 4, mean","X: 63.83098<br />tempmax2: 43.86000<br />type: 4, mean","X: 59.74552<br />tempmax2: 43.86000<br />type: 4, mean","X: 59.02170<br />tempmax2: 43.86000<br />type: 4, mean","X: 54.75444<br />tempmax2: 43.86000<br />type: 4, mean","X: 39.36753<br />tempmax2: 43.86000<br />type: 4, mean","X: 41.35471<br />tempmax2: 43.86000<br />type: 4, mean","X: 51.14928<br />tempmax2: 43.86000<br />type: 4, mean","X: 57.31274<br />tempmax2: 43.86000<br />type: 4, mean","X: 56.13935<br />tempmax2: 43.86000<br />type: 4, mean","X: 39.12314<br />tempmax2: 43.86000<br />type: 4, mean","X: 45.78134<br />tempmax2: 43.86000<br />type: 4, mean","X: 53.47798<br />tempmax2: 43.86000<br />type: 4, mean","X: 52.87634<br />tempmax2: 43.86000<br />type: 4, mean","X: 57.18596<br />tempmax2: 43.86000<br />type: 4, mean"],"frame":"4, mean","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,255,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","visible":true}],"traces":[0]}],"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>In the example above, take note of three distances.</p>
+<ul>
+<li><p><span class="math inline">\(0 \rightarrow 1\)</span>: <span class="math inline">\(\text{SSTO}\)</span>: The sum of “each point’s distance to the mean, squared”</p></li>
+<li><p><span class="math inline">\(1 \rightarrow 2\)</span>: Regression: adding in an explanatory variable</p></li>
+<li><p><span class="math inline">\(2 \rightarrow 3\)</span>: <span class="math inline">\(\text{SSE}\)</span>: The sum of “each point’s distance to the line, squared”</p></li>
+<li><p><span class="math inline">\(3 \rightarrow 4\)</span>: <span class="math inline">\(\text{SSR}\)</span>: The sum of “each point’s expected distance to the mean”</p></li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+R code for calculating the above terms
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> mylm<span class="sc">$</span>residuals</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fitted_values <span class="ot">&lt;-</span> mylm<span class="sc">$</span>fitted.values</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mean_mpg <span class="ot">&lt;-</span> <span class="fu">mean</span>(mtcars<span class="sc">$</span>mpg)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>((fitted_values <span class="sc">-</span> mean_mpg)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>TSS <span class="ot">&lt;-</span> <span class="fu">sum</span>((mtcars<span class="sc">$</span>mpg <span class="sc">-</span> mean_mpg)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">cat</span>(<span class="st">"Sum of Squared Errors (SSE):"</span>, SSE, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p>Sum of Squared Errors (SSE): 1443.558</p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">cat</span>(<span class="st">"Sum of Squares Regression (SSR):"</span>, SSR, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p>Sum of Squares Regression (SSR): 18163.03</p>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">cat</span>(<span class="st">"Total Sum of Squares (TSS):"</span>, TSS, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p>Total Sum of Squares (TSS): 1126.047</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Ratio of explained variance and total variance</strong></p>
+<p><img src="lines2.png" class="img-fluid"></p>
+<p>We know why the points would be, in total, <span class="math inline">\(\text{SSR}\)</span> away from the average (since the estimated regression line explains the variance), but we don’t know why the points are <span class="math inline">\(\text{SSE}\)</span> away from the estimated regression line.</p>
+<p>Notice how <span class="math inline">\(\text{SSTO} = \text{SSE} + \text{SSR}\)</span>. This can be equivalently written as <span class="math inline">\(\text{Total variance} = \text{Unexplained variance} + \text{Explained variance}\)</span></p>
+<p>We can show this relationship of explained/total variance as a coefficient.</p>
+</section>
+<section id="calculating-the-coefficient-of-determination" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-the-coefficient-of-determination">Calculating the Coefficient of Determination</h3>
+<p>Using the terms above, we can calculate a ratio of the variance of <span class="math inline">\(Y\)</span> explained by the estimated regression line (<span class="math inline">\(\text{SSR}\)</span>) and the total variance of <span class="math inline">\(Y\)</span> from the average <span class="math inline">\(Y\)</span> value (<span class="math inline">\(\text{SSTO}\)</span>.</p>
+<p><span class="math display">\[
+R^2 = \frac{\text{SSR}}{\text{SSTO}} = \frac{\text{Explained Variance}}{\text{Total Variance}}
+\]</span> <span class="math display">\[
+R^2 = 1 - \frac{\text{SSE}}{\text{SSTO}} = \frac{\text{Unexplained Variance}}{\text{Total Variance}}
+\]</span></p>
+<p>All <span class="math inline">\(R^2\)</span> represents is the ratio between variance explained by the model and total variance.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+R code for calculating the coefficient of determination
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lm_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mylm)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(lm_summary<span class="sc">$</span>r.squared)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><em>0.4567</em></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Assumptions for Simple Linear Regression
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>If we are to make a model off the points displayed as such:</p>
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
@@ -598,8 +930,11 @@ Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
 </ul>
 <p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i :\epsilon \sim \mathcal{N}(0,\sigma^2)\)</span></p>
 <p>Given <span class="math inline">\(X\)</span>, <span class="math inline">\(Y \sim \mathcal{N}(\beta_0 +\beta_1X,\sigma^2)\)</span></p>
+</div>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -608,7 +943,7 @@ R code for testing the assumptions for simple linear regression
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Three plots in R can be used to test the assumptions for simple linear regression:</p>
 <p><strong>Residuals versus Fitted-values Plot</strong> The linear relationship and constant variance assumptions can be diagnosed using a residuals versus fitted-values plot. The fitted values are the <span class="math inline">\(Y^i\)</span></p>
@@ -621,97 +956,13 @@ R code for testing the assumptions for simple linear regression
 <p><strong>Residuals versus Order Plot</strong></p>
 <p>When the data is collected in a specific order, or has some other important ordering to it, then the independence of the error terms can be assessed. This is typically done by plotting the residuals against their order of occurrance. If any dramatic trends are visible in the plot, then the independence assumption is violated.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)) <span class="co">#Residuals versus Fitted-values Plot: Checks Assumptions #1 and #3</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mylm,<span class="at">which=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="co">#Q-Q Plot of the Residuals: Checks Assumption #2</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mylm<span class="sc">$</span>residuals) <span class="co">#Residuals versus Order Plot: Checks Assumption #5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)) <span class="co">#Residuals versus Fitted-values Plot: Checks Assumptions #1 and #3</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mylm,<span class="at">which=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="co">#Q-Q Plot of the Residuals: Checks Assumption #2</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mylm<span class="sc">$</span>residuals) <span class="co">#Residuals versus Order Plot: Checks Assumption #5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="assessing-the-estimated-regression-line" class="level2">
-<h2 class="anchored" data-anchor-id="assessing-the-estimated-regression-line">Assessing the Estimated Regression Line</h2>
-<section id="terms" class="level3">
-<h3 class="anchored" data-anchor-id="terms">Terms</h3>
-<p><strong>Sum of Squared Errors</strong></p>
-<p>Measures how much the residuals deviate from the line.</p>
-<p><span class="math inline">\(\text{SSE} = \sum_{i=1}^n \left(r_i\right)^2 = \sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2\)</span></p>
-<p><strong>Sum of Squares Regression</strong></p>
-<p>Measures how much the regression line deviates from the average y-value.</p>
-<p><span class="math inline">\(\text{SSR} = \sum_{i=1}^n \left(r_i\right)^2 = \sum_{i=1}^n\left(\hat{Y}_i - \bar{Y}\right)^2\)</span></p>
-<p><strong>Total Sum of Squares</strong></p>
-<p>Measures how much the y-values deviate from the average y-value.</p>
-<p><span class="math inline">\(\text{SSTO} = \sum_{i=1}^n \left(Y_i - \bar{Y}\right)^2\)</span></p>
-<p><img src="images/paste-1.png" class="img-fluid" width="544"></p>
-<p><span class="math inline">\(\text{SSTO}=\text{SSE}+\text{SSR}\)</span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-R code for calculating the above terms
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> mylm<span class="sc">$</span>residuals</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fitted_values <span class="ot">&lt;-</span> mylm<span class="sc">$</span>fitted.values</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mean_mpg <span class="ot">&lt;-</span> <span class="fu">mean</span>(mtcars<span class="sc">$</span>mpg)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>((fitted_values <span class="sc">-</span> mean_mpg)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>TSS <span class="ot">&lt;-</span> <span class="fu">sum</span>((mtcars<span class="sc">$</span>mpg <span class="sc">-</span> mean_mpg)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">cat</span>(<span class="st">"Sum of Squared Errors (SSE):"</span>, SSE, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p>Sum of Squared Errors (SSE): 278.3219</p>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">cat</span>(<span class="st">"Sum of Squares Regression (SSR):"</span>, SSR, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p>Sum of Squares Regression (SSR): 847.7252</p>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(<span class="fu">cat</span>(<span class="st">"Total Sum of Squares (TSS):"</span>, TSS, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p>Total Sum of Squares (TSS): 1126.047</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="calculating-the-coefficient-of-determination" class="level2">
-<h2 class="anchored" data-anchor-id="calculating-the-coefficient-of-determination">Calculating the Coefficient of Determination</h2>
-<p>Using the terms above, we can calculate a ratio of the variance of <span class="math inline">\(Y\)</span> explained by the estimated regression line (<span class="math inline">\(\text{SSE}\)</span>) and the total variance of <span class="math inline">\(Y\)</span> from the average <span class="math inline">\(Y\)</span> value (<span class="math inline">\(\text{SSTO}\)</span>.</p>
-<p><span class="math display">\[
-R^2 = 1-\frac{\text{SSE}}{\text{SSTO}}
-\]</span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-R code for calculating the coefficient of determination
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>lm_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(mylm)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pander<span class="sc">::</span><span class="fu">pander</span>(lm_summary<span class="sc">$</span>r.squared)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><em>0.7528</em></p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -719,6 +970,7 @@ R code for calculating the coefficient of determination
 </div>
 
 
+</section>
 </section>
 </section>
 
