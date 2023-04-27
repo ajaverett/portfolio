@@ -661,17 +661,25 @@ In the example above, take note of three distances.
 # R code for calculating the above terms
 
 ```{r}
-residuals <- mylm$residuals
-fitted_values <- mylm$fitted.values
-mean_mpg <- mean(mtcars$mpg)
+df <- mtcars %>% mutate(
+  X = cyl,
+  Y = mpg
+)
 
-SSE <- sum(residuals^2)
-SSR <- sum((fitted_values - mean_mpg)^2)
-TSS <- sum((mtcars$mpg - mean_mpg)^2)
+mylm <- lm(Y ~ X, data=df)
 
-pander::pander(cat("Sum of Squared Errors (SSE):", SSE, "\n"))
-pander::pander(cat("Sum of Squares Regression (SSR):", SSR, "\n"))
-pander::pander(cat("Total Sum of Squares (TSS):", TSS, "\n"))
+sse<-sum(mylm$res^2)
+ssr<-sum((mylm$fit - mean(df$Y))^2)
+ssto<-sum((df$Y - mean(df$Y))^2)
+
+sse
+ssr
+ssto
+
+sqrt(ssr/ssto)
+
+predict(mylm, data.frame(X = 0))
+
 ```
 :::
 
@@ -727,7 +735,7 @@ We need to confirm the following assumptions
 -   **2) Normal errors**: $\epsilon \sim \mathcal{N}(0,\sigma^2)$, the
     error terms are normally distributed with a mean of 0
 
--   **3) Constant variance**: The variance $σ^2$ of the error terms is
+-   **3) Constant variance**: The varianceB $O^2$ of the error terms is
     constant (the same) across all values of $X_i$
 
 -   **4) Fixed** $X$: the $X$ values can be considered fixed and
