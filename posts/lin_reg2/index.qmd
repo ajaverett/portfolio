@@ -11,9 +11,13 @@ format:
   html:
     toc: true
     toc-location: left
+    code-fold: true
+
 ---
 
 # Building an $R^2$
+
+![](meme.png)
 
 ## VARIANCE: Observing a Single Variable and its Distance From Average
 
