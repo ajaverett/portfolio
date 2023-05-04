@@ -504,8 +504,8 @@ The formula to calculate any given residual is below:
 
 $$
 \begin{align*}
-r_i &= \left(Y_i - \hat{Y_i}\right)^2\\
-r_i &= \left(Y_i - (b_0+b_1X_i)\right)^2
+r_i &= \left(Y_i - \hat{Y_i}\right)\\
+r_i &= \left(Y_i - (b_0+b_1X_i)\right)
 \end{align*}
 $$
 
