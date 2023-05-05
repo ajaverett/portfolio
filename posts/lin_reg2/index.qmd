@@ -60,7 +60,7 @@ ggplot(aes(y = tempmax2, x=X)) +
 
 ```
 
-We can measure how far a point is from the mean. The calculation is simple: $\text{Temperature of a given day} - \text{Temperature average} = \text{How much the given day is different from the average}$ or more elegantly, $Y_i - \bar{Y}$ For example, if the temperature for a given day is 46 degrees, and the average temperature was 43, how much this day varies from the average is 3 degrees. $46 - 43 = 3$
+We can measure how far a point is from the mean. The calculation is simple: "Temperature of a given day - Temperature average = How much the given day is different from the average" or more elegantly, $Y_i - \bar{Y}$. For example, if the temperature for a given day is 46 degrees, and the average temperature was 43, how much this day varies from the average is 3 degrees. $46 - 43 = 3$
 
 ```{r}
 #| warning: false
@@ -113,8 +113,17 @@ ggplot(aes(y = tempmax2, x=X)) +
 9.  (Also, another reason we square things is because it makes calculus easier)
 
 $$
+\begin{align*}
 \text{Variance of the response variable} \\\;\\\\ =\frac{\sum_{i=1}^n (Y_i - \bar{Y})^2}{\text{degrees of freedom}} \\\;\\ =\frac{\text{SSTO}}{\text{degrees of freedom}}\\\;\\(\text{where degrees of freedom}=n-1 )
+\end{align*}
 $$
+
+::: {.callout-tip collapse="true"}
+# Degrees of Freedom
+
+Degrees of freedom refer to the number of independent pieces of information that are available in the sample. Estimates about the population can be calculated from our sample. For example, the mean can be generated from our sample. However, if we use an estimate to get another estimate- we have lost a degree of freedom. For example, the formula for variance uses the mean, meaning a "degree of freedom" is lost- thus degrees of freedom is equal to $n-1$.
+
+:::
 
 ### SSTO: the Total Sum of Squares
 
@@ -185,15 +194,14 @@ $$
 
 The **Observed Points**
 
+Each point, assuming no assumptions are violated, are derived from the formula below
 $$
 Y_i = \beta_0 + \beta_1 X_i+ \epsilon_i
-$$ or
+$$ 
 
-$$
-Y_i = b_0 + b_1X_i + r_i
-$$
+While $Y_i = b_0 + b_1X_i + r_i$ is mathematically true, it is important to note that the notation with population parameters is used as this is where the points actually are derived from.
 
-The **Estimated Regression Line** obtained from a regression analysis from the observed points
+The **Estimated Regression Line** obtained from a regression analysis from the observed points 
 
 $$
 \hat{Y}_i = b_0 + b_1 X_i
@@ -583,6 +591,13 @@ $$
 \text{MSE} = \frac{\text{SSE}}{\text{degrees of freedom}} \\\;\;\\\;(\text{where degrees of freedom}=n-2)
 $$
 
+::: {.callout-tip collapse="true"}
+# Degrees of Freedom
+
+Since two estimates ($b_0$ and $b_1$) are used to calculate $\text{MSE}$ from our sample about the population, we have lost two degrees of freedom from our sample. Thus, degrees of freedom is now equal to $n-2$
+
+:::
+
 Thus we can integrate it with our previous formulas
 
 $$
@@ -828,11 +843,11 @@ pander::pander(1 - SSE/SSTO)
 
 **Difference between the slope, $R^2$, and significance in linear regression**
 
-Slope: The slope indicates how much $Y$ changes for a one-unit change in $X$. 
+Slope: The slope indicates how much $Y$ changes for a one-unit change in $X$. This means that if our slope is significantly different than 0 ($\text{p-value} < \alpha$), we reject the notion that there is no association between $X$ and $Y$.
 
 ![](lines5.png)
 
-For the graphic above, notice how the slope is exactly the same- the difference is how well the data varies given the same slope. This is important since given the rule (slope), $R^2$ will describe how 'obedient' the data is to the law.
+$R^2$: For the graphic above, notice how the slope is exactly the same for each graph- the difference is how much the data varies given the same slope. This is important since given the rule (slope), $R^2$ will describe how 'obedient' the data is to the law.
 
 ::: {.callout-tip collapse="true"}
 ## Assumptions for Simple Linear Regression
