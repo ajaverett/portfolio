@@ -180,7 +180,7 @@ With points on a graph, we can see if they make a line.
 The **True Regression Line**
 
 $$
-E\{Y\} = \beta_0 + \beta_1 X_i 
+E\{Y\}_i = \beta_0 + \beta_1 X_i 
 $$
 
 The **Observed Points**
@@ -580,16 +580,16 @@ $$
 Geometrically, we can imagine the error "amount" as the area of the boxes. This is why when we add up all the boxes, we get the sum of squares error or $\text{SSE}$. This means we can estimate the average size of the box with a formula you might expect:
 
 $$
-\text{MSE} = \frac{\text{SSE}}{n} 
+\text{MSE} = \frac{\text{SSE}}{\text{degrees of freedom}} \;\;\;\text{where degrees of freedom}=n-2
 $$
 
 Thus we can integrate it with our previous formulas
 
 $$
 \begin{align*}
-\text{MSE} &= \frac{\sum_{i=1}^n \left(r_i\right)^2}{n} \\
-\text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{n}\\
-\text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{n}
+\text{MSE} &= \frac{\sum_{i=1}^n \left(r_i\right)^2}{\text{degrees of freedom}} \\
+\text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{\text{degrees of freedom}}\\
+\text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{\text{degrees of freedom}}
 \end{align*}
 $$
 
@@ -607,10 +607,10 @@ Thus we can integrate it with our previous formulas
 
 $$
 \begin{align*}
-\text{RMSE} &= \sqrt{\frac{\text{SSE}}{n}} \\
-\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n \left(r_i\right)^2}{n}} \\
-\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{n}}\\
-\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{n}}
+\text{RMSE} &= \sqrt{\frac{\text{SSE}}{\text{degrees of freedom}}} \\
+\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n \left(r_i\right)^2}{\text{degrees of freedom}}} \\
+\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{\text{degrees of freedom}}}\\
+\text{RMSE} &= \sqrt{\frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{\text{degrees of freedom}}}
 \end{align*}
 $$
 
