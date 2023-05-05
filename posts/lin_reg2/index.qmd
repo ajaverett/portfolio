@@ -60,7 +60,7 @@ ggplot(aes(y = tempmax2, x=X)) +
 
 ```
 
-We can measure how far a point is from the mean. The calculation is simple: $\text{Temperature of a given day} - \text{Temperature average} = \text{How much the given day is different from the average}$ or more elegantly, $x_i - \mu$ For example, if the temperature for a given day is 46 degrees, and the average temperature was 43, how much this day varies from the average is 3 degrees. $46 - 43 = 3$
+We can measure how far a point is from the mean. The calculation is simple: $\text{Temperature of a given day} - \text{Temperature average} = \text{How much the given day is different from the average}$ or more elegantly, $Y_i - \bar{Y}$ For example, if the temperature for a given day is 46 degrees, and the average temperature was 43, how much this day varies from the average is 3 degrees. $46 - 43 = 3$
 
 ```{r}
 #| warning: false
@@ -113,7 +113,7 @@ ggplot(aes(y = tempmax2, x=X)) +
 9.  (Also, another reason we square things is because it makes calculus easier)
 
 $$
-\text{Variance} = \frac{\sum_{i=1}^n (x_i - \mu)^2}{n} = \frac{\text{SSTO}}{n}
+\text{Variance of the response variable} \\\;\\\\ =\frac{\sum_{i=1}^n (Y_i - \bar{Y})^2}{\text{degrees of freedom}} \\\;\\ =\frac{\text{SSTO}}{\text{degrees of freedom}}\\\;\\(\text{where degrees of freedom}=n-1 )
 $$
 
 ### SSTO: the Total Sum of Squares
@@ -202,7 +202,7 @@ $$
 ::: {.callout-tip collapse="true"}
 # Terminology
 
--   $E\{Y\}$ - True mean y-value, also $\mu_{Y|X}$ or $E\{Y|X\}$
+-   $E\{Y\}_i$ - True mean y-value, also $\mu_{Y|X}_i$ or $E\{Y|X\}_i$
 
 -   $\beta_0$ - True $y$-intercept
 
@@ -210,7 +210,7 @@ $$
 
 -   $Y_i$ - Response or dependent variable for the $i^{\text{th}}$ observation.
 
--   $\epsilon_i$ - Error, distance of dot to true line. $\epsilon_i = Y_i - E\{Y\}$
+-   $\epsilon_i$ - Error, distance of dot to true line. $\epsilon_i = Y_i - E\{Y\}_i$
 
 -   $r_i$ - Residual, distance of dot to estimated line. $r_i = Y_i - \hat{Y}_i$
 
@@ -270,7 +270,7 @@ ggplot(mtcars, aes(x=wt, y=mpg)) +
 
 **Estimations**
 
--   $\hat{Y}$ estimates $E\{Y\}$
+-   $\hat{Y}_i$ estimates $E\{Y\}_i$
 -   $b_0$ estimates $\beta_0$
 -   $b_1$ estimates $\beta_1$
 -   $r_i$ estimates $\epsilon_i$
@@ -580,7 +580,7 @@ $$
 Geometrically, we can imagine the error "amount" as the area of the boxes. This is why when we add up all the boxes, we get the sum of squares error or $\text{SSE}$. This means we can estimate the average size of the box with a formula you might expect:
 
 $$
-\text{MSE} = \frac{\text{SSE}}{\text{degrees of freedom}} \;\;\;\text{where degrees of freedom}=n-2
+\text{MSE} = \frac{\text{SSE}}{\text{degrees of freedom}} \\\;\;\\\;(\text{where degrees of freedom}=n-2)
 $$
 
 Thus we can integrate it with our previous formulas
@@ -590,6 +590,7 @@ $$
 \text{MSE} &= \frac{\sum_{i=1}^n \left(r_i\right)^2}{\text{degrees of freedom}} \\
 \text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - \hat{Y_i}\right)^2}{\text{degrees of freedom}}\\
 \text{MSE} &= \frac{\sum_{i=1}^n\left(Y_i - (b_0+b_1X_i)\right)^2}{\text{degrees of freedom}}
+\\\;\\&(\text{where degrees of freedom}=n-2)
 \end{align*}
 $$
 
