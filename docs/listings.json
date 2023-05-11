@@ -2,8 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/linalg/tempw1.html",
-      "/posts/lin_reg2/index.html",
       "/posts/pca/pca.html",
       "/posts/conspiracy/conspiracy.html",
       "/posts/rosetta/index.html",
@@ -11,8 +9,7 @@
       "/posts/pandasvtidy/index.html",
       "/posts/usa_christian/index.html",
       "/posts/power_triangle/power_triangle.html",
-      "/posts/pvalue/index.html",
-      "/posts/welcome/index.html"
+      "/posts/pvalue/index.html"
     ]
   }
 ]
